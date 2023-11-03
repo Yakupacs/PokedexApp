@@ -242,6 +242,11 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 					if let url = URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/\(String(format:"%03d", finalFileName)).png") {
 						self.pokeImageView.kf.setImage(with: url)
 					}
+					self.nextPokemonButton.isEnabled = false
+					self.backPokemonButton.isEnabled = false
+					
+					self.pokemonImageAnimate()
+					
 					self.typesCount = pokemon.types.count
 					self.heightTitleLabel.text = "\(pokemon.height) m"
 					self.weightTitleLabel.text = "\(pokemon.weight) kg"
@@ -253,72 +258,10 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 					self.view.backgroundColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
 					self.aboutTitleLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
 					self.baseTitleLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.hpLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.atkLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.defLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.satkLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.sdefLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.spdLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.hpProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.atkProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.defProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.satkProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.sdefProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
-					self.spdProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.setProgressBarLabel(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.setProgressBarColor(pokemon: pokemon)
+					self.setProgressBarAnimate(pokemon: pokemon)
 					
-					self.hpProgressBar.setProgress(0.0, animated: false)
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-						self.hpProgressBar.setProgress((Float(pokemon.stats[0].baseStat) / 225.0), animated: false)
-						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
-							self.hpProgressBar.layoutIfNeeded()
-						})
-					}
-					self.hpValueLabel.text = String(pokemon.stats[0].baseStat)
-					
-					self.atkProgressBar.setProgress(0.0, animated: false)
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-						self.atkProgressBar.setProgress((Float(pokemon.stats[1].baseStat) / 225.0), animated: false)
-						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
-							self.atkProgressBar.layoutIfNeeded()
-						})
-					}
-					self.atkValueLabel.text = String(pokemon.stats[1].baseStat)
-					
-					self.defProgressBar.setProgress(0.0, animated: false)
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-						self.defProgressBar.setProgress((Float(pokemon.stats[2].baseStat) / 225.0), animated: false)
-						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
-							self.defProgressBar.layoutIfNeeded()
-						})
-					}
-					self.defValueLabel.text = String(pokemon.stats[2].baseStat)
-					
-					self.satkProgressBar.setProgress(0.0, animated: false)
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-						self.satkProgressBar.setProgress((Float(pokemon.stats[3].baseStat) / 225.0), animated: false)
-						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
-							self.satkProgressBar.layoutIfNeeded()
-						})
-					}
-					self.satkValueLabel.text = String(pokemon.stats[3].baseStat)
-					
-					self.sdefProgressBar.setProgress(0.0, animated: false)
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-						self.sdefProgressBar.setProgress((Float(pokemon.stats[4].baseStat) / 225.0), animated: false)
-						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
-							self.sdefProgressBar.layoutIfNeeded()
-						})
-					}
-					self.sdefValueLabel.text = String(pokemon.stats[4].baseStat)
-					
-					self.spdProgressBar.setProgress(0.0, animated: false)
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-						self.spdProgressBar.setProgress((Float(pokemon.stats[5].baseStat) / 225.0), animated: false)
-						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
-							self.spdProgressBar.layoutIfNeeded()
-						})
-					}
-					self.spdValueLabel.text = String(pokemon.stats[5].baseStat)
 				}
 			}
 		}
@@ -342,36 +285,6 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		}
 	}
 	
-	func setColor(pokemonType: String) -> UIColor{
-		if pokemonType == "Grass"{
-			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		}else if pokemonType == "Poison"{
-			return UIColor(red: 164 / 255.0, green: 62 / 255.0, blue: 158 / 255.0, alpha: 1)
-		}else if pokemonType == "Fire"{
-			return UIColor(red: 245 / 255.0, green: 125 / 255.0, blue: 49 / 255.0, alpha: 1)
-		}else if pokemonType == "Water"{
-			return UIColor(red: 100 / 255.0, green: 147 / 255.0, blue: 235 / 255.0, alpha: 1)
-		}else if pokemonType == "Bug"{
-			return UIColor(red: 167 / 255.0, green: 183 / 255.0, blue: 35 / 255.0, alpha: 1)
-		}else if pokemonType == "Flying"{
-			return UIColor(red: 168 / 255.0, green: 145 / 255.0, blue: 236 / 255.0, alpha: 1)
-		}else if pokemonType == "Electric"{
-			return UIColor(red: 249 / 255.0, green: 207 / 255.0, blue: 48 / 255.0, alpha: 1)
-		}else if pokemonType == "Ghost"{
-			return UIColor(red: 112 / 255.0, green: 85 / 255.0, blue: 155 / 255.0, alpha: 1)
-		}else if pokemonType == "Normal"{
-			return UIColor(red: 170 / 255.0, green: 166 / 255.0, blue: 127 / 255.0, alpha: 1)
-		}else if pokemonType == "Psychic"{
-			return UIColor(red: 251 / 255.0, green: 85 / 255.0, blue: 132 / 255.0, alpha: 1)
-		}else if pokemonType == "Steel"{
-			return UIColor(red: 183 / 255.0, green: 185 / 255.0, blue: 208 / 255.0, alpha: 1)
-		}else if pokemonType == "Rock"{
-			return UIColor(red: 182 / 255.0, green: 158 / 255.0, blue: 49 / 255.0, alpha: 1)
-		}else{
-			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		}
-	}
-	
 	func buttonsRename() {
 		for i in 0...typesCount - 1 {
 			let typeButton = UIButton()
@@ -387,12 +300,26 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 				typeButton.setTitle("    \(pokemon.types[i].type.name.capitalized)    ", for: .normal)
 			}
 		}
-		
 		for button in buttons {
 			buttonStackView.addArrangedSubview(button)
 		}
 	}
 	
+	@objc func backPokemonFunc(){
+		detailViewModel?.getBackPokemon(withId: self.pokemon!.id)
+	}
+	
+	@objc func nextPokemonFunc(){
+		detailViewModel?.getNextPokemon(withId: self.pokemon!.id)
+	}
+	
+	@objc func backFunc(){
+		self.dismiss(animated: true)
+	}
+}
+
+// MARK: - Appearance
+extension DetailVC{
 	func setupConstraints() {
 		let fileName = SelectedPokemon.shared.selected?.url
 		let fileArray = fileName?.split(separator: "/")
@@ -486,7 +413,6 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			aboutTitleLabel.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 20),
 			aboutTitleLabel.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -20),
 			
-			// MARK: - Height
 			heightTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 30),
 			heightTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			
@@ -503,7 +429,6 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			heightImageView.heightAnchor.constraint(equalToConstant: 16),
 			heightImageView.widthAnchor.constraint(equalToConstant: 16),
 			
-			// MARK: - Weight
 			weightImageView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 30),
 			weightImageView.rightAnchor.constraint(equalTo: weightTitleLabel.leftAnchor, constant: -10),
 			weightImageView.heightAnchor.constraint(equalToConstant: 16),
@@ -520,7 +445,6 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			weightDividerView.trailingAnchor.constraint(equalTo: heightImageView.leadingAnchor, constant: -20),
 			weightDividerView.heightAnchor.constraint(equalTo: infoView.heightAnchor, multiplier: 0.1),
 			
-			// MARK: - Moves
 			movesTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 25),
 			movesTitleLabel.leadingAnchor.constraint(equalTo: heightDividerView.leadingAnchor, constant: 25),
 			
@@ -529,7 +453,6 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			
 			pokemonInfoLabel.topAnchor.constraint(equalTo: movesValueLabel.bottomAnchor, constant: 40),
 			pokemonInfoLabel.centerXAnchor.constraint(equalTo: infoView.centerXAnchor),
-			//MARK: - Base Stat
 			
 			baseTitleLabel.topAnchor.constraint(equalTo: pokemonInfoLabel.bottomAnchor, constant: 25),
 			baseTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -550,7 +473,6 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			progressStackView.leadingAnchor.constraint(equalTo: baseValueStatsStackView.trailingAnchor, constant: 20),
 			progressStackView.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -20),
 			
-			// MARK: - ProgressView Height
 			hpProgressBar.heightAnchor.constraint(equalToConstant: 6),
 			atkProgressBar.heightAnchor.constraint(equalToConstant: 6),
 			defProgressBar.heightAnchor.constraint(equalToConstant: 6),
@@ -572,15 +494,124 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		spdLabel.text = "SPD"
 	}
 	
-	@objc func backPokemonFunc(){
-		detailViewModel?.getBackPokemon(withId: self.pokemon!.id)
+	func setProgressBarLabel(pokemonType: String){
+		self.hpLabel.textColor = self.setColor(pokemonType: pokemonType)
+		self.atkLabel.textColor = self.setColor(pokemonType: pokemonType)
+		self.defLabel.textColor = self.setColor(pokemonType: pokemonType)
+		self.satkLabel.textColor = self.setColor(pokemonType: pokemonType)
+		self.sdefLabel.textColor = self.setColor(pokemonType: pokemonType)
+		self.spdLabel.textColor = self.setColor(pokemonType: pokemonType)
 	}
 	
-	@objc func nextPokemonFunc(){
-		detailViewModel?.getNextPokemon(withId: self.pokemon!.id)
+	func setProgressBarColor(pokemon: Pokemon){
+		self.hpProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+		self.atkProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+		self.defProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+		self.satkProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+		self.sdefProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+		self.spdProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
 	}
 	
-	@objc func backFunc(){
-		self.dismiss(animated: true)
+	func setProgressBarAnimate(pokemon: Pokemon){
+		self.hpProgressBar.setProgress(0.0, animated: false)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			self.hpProgressBar.setProgress((Float(pokemon.stats[0].baseStat) / 225.0), animated: false)
+			UIView.animate(withDuration: 1.5, delay: 0, options: [], animations: { [unowned self] in
+				self.hpProgressBar.layoutIfNeeded()
+			})
+		}
+		self.hpValueLabel.text = String(pokemon.stats[0].baseStat)
+		
+		self.atkProgressBar.setProgress(0.0, animated: false)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			self.atkProgressBar.setProgress((Float(pokemon.stats[1].baseStat) / 225.0), animated: false)
+			UIView.animate(withDuration: 1.5, delay: 0, options: [], animations: { [unowned self] in
+				self.atkProgressBar.layoutIfNeeded()
+			})
+		}
+		self.atkValueLabel.text = String(pokemon.stats[1].baseStat)
+		
+		self.defProgressBar.setProgress(0.0, animated: false)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			self.defProgressBar.setProgress((Float(pokemon.stats[2].baseStat) / 225.0), animated: false)
+			UIView.animate(withDuration: 1.5, delay: 0, options: [], animations: { [unowned self] in
+				self.defProgressBar.layoutIfNeeded()
+			})
+		}
+		self.defValueLabel.text = String(pokemon.stats[2].baseStat)
+		
+		self.satkProgressBar.setProgress(0.0, animated: false)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			self.satkProgressBar.setProgress((Float(pokemon.stats[3].baseStat) / 225.0), animated: false)
+			UIView.animate(withDuration: 1.5, delay: 0, options: [], animations: { [unowned self] in
+				self.satkProgressBar.layoutIfNeeded()
+			})
+		}
+		self.satkValueLabel.text = String(pokemon.stats[3].baseStat)
+		
+		self.sdefProgressBar.setProgress(0.0, animated: false)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			self.sdefProgressBar.setProgress((Float(pokemon.stats[4].baseStat) / 225.0), animated: false)
+			UIView.animate(withDuration: 1.5, delay: 0, options: [], animations: { [unowned self] in
+				self.sdefProgressBar.layoutIfNeeded()
+			})
+		}
+		self.sdefValueLabel.text = String(pokemon.stats[4].baseStat)
+		
+		self.spdProgressBar.setProgress(0.0, animated: false)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			self.spdProgressBar.setProgress((Float(pokemon.stats[5].baseStat) / 225.0), animated: false)
+			UIView.animate(withDuration: 1.5, delay: 0, options: [], animations: { [unowned self] in
+				self.spdProgressBar.layoutIfNeeded()
+			})
+		}
+		self.spdValueLabel.text = String(pokemon.stats[5].baseStat)
+	}
+	
+	func setColor(pokemonType: String) -> UIColor{
+		if pokemonType == "Grass"{
+			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
+		}else if pokemonType == "Poison"{
+			return UIColor(red: 164 / 255.0, green: 62 / 255.0, blue: 158 / 255.0, alpha: 1)
+		}else if pokemonType == "Fire"{
+			return UIColor(red: 245 / 255.0, green: 125 / 255.0, blue: 49 / 255.0, alpha: 1)
+		}else if pokemonType == "Water"{
+			return UIColor(red: 100 / 255.0, green: 147 / 255.0, blue: 235 / 255.0, alpha: 1)
+		}else if pokemonType == "Bug"{
+			return UIColor(red: 167 / 255.0, green: 183 / 255.0, blue: 35 / 255.0, alpha: 1)
+		}else if pokemonType == "Flying"{
+			return UIColor(red: 168 / 255.0, green: 145 / 255.0, blue: 236 / 255.0, alpha: 1)
+		}else if pokemonType == "Electric"{
+			return UIColor(red: 249 / 255.0, green: 207 / 255.0, blue: 48 / 255.0, alpha: 1)
+		}else if pokemonType == "Ghost"{
+			return UIColor(red: 112 / 255.0, green: 85 / 255.0, blue: 155 / 255.0, alpha: 1)
+		}else if pokemonType == "Normal"{
+			return UIColor(red: 170 / 255.0, green: 166 / 255.0, blue: 127 / 255.0, alpha: 1)
+		}else if pokemonType == "Psychic"{
+			return UIColor(red: 251 / 255.0, green: 85 / 255.0, blue: 132 / 255.0, alpha: 1)
+		}else if pokemonType == "Steel"{
+			return UIColor(red: 183 / 255.0, green: 185 / 255.0, blue: 208 / 255.0, alpha: 1)
+		}else if pokemonType == "Rock"{
+			return UIColor(red: 182 / 255.0, green: 158 / 255.0, blue: 49 / 255.0, alpha: 1)
+		}else{
+			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
+		}
+	}
+	
+	func pokemonImageAnimate(){
+		UIView.animate(withDuration: 1) {
+			self.pokeImageView.frame.origin.y += 20
+		} completion: { _ in
+			UIView.animate(withDuration: 1) {
+				self.pokeImageView.frame.origin.y -= 20
+			} completion: { _ in
+				UIView.animate(withDuration: 1) {
+					self.pokeImageView.frame.origin.y += 20
+				} completion: { _ in
+					self.nextPokemonButton.isEnabled = true
+					self.backPokemonButton.isEnabled = true
+				}
+			}
+		}
 	}
 }

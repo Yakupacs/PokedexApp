@@ -13,7 +13,7 @@ class CustomLabel: UILabel{
 		super.init(frame: frame)
 		commonInit(text: text, fontName: fontName, size: size, alignment: textAlignment, textColor: textColor, line: line)
 	}
-	
+
 	private func commonInit(text: String, fontName: String, size: CGFloat, alignment: NSTextAlignment, textColor color: UIColor, line: Int){
 		translatesAutoresizingMaskIntoConstraints = false
 		font = UIFont(name: fontName, size: size)
@@ -21,7 +21,7 @@ class CustomLabel: UILabel{
 		textColor = color
 		numberOfLines = line
 	}
-	
+
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
