@@ -29,7 +29,6 @@
 		DA32A36F2AF4FC85002AEF08 /* AllPokemons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A36E2AF4FC85002AEF08 /* AllPokemons.swift */; };
 		DA32A3712AF505C3002AEF08 /* PokedexCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3702AF505C3002AEF08 /* PokedexCVC.swift */; };
 		DA32A3742AF5079D002AEF08 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DA32A3732AF5079D002AEF08 /* Kingfisher */; };
-		DA32A3762AF51224002AEF08 /* TypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3752AF51224002AEF08 /* TypeCell.swift */; };
 		DA32A3782AF514CB002AEF08 /* SelectedPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3772AF514CB002AEF08 /* SelectedPokemon.swift */; };
 /* End PBXBuildFile section */
 
@@ -76,7 +75,6 @@
 		DA32A36C2AF4F291002AEF08 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		DA32A36E2AF4FC85002AEF08 /* AllPokemons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPokemons.swift; sourceTree = "<group>"; };
 		DA32A3702AF505C3002AEF08 /* PokedexCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexCVC.swift; sourceTree = "<group>"; };
-		DA32A3752AF51224002AEF08 /* TypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCell.swift; sourceTree = "<group>"; };
 		DA32A3772AF514CB002AEF08 /* SelectedPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPokemon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,7 +171,6 @@
 				DA32A3262AF4DABE002AEF08 /* HomepageVC.swift */,
 				DA32A3562AF4DC14002AEF08 /* DetailVC.swift */,
 				DA32A3702AF505C3002AEF08 /* PokedexCVC.swift */,
-				DA32A3752AF51224002AEF08 /* TypeCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -367,7 +364,6 @@
 				DA32A3232AF4DABE002AEF08 /* AppDelegate.swift in Sources */,
 				DA32A36B2AF4ED6D002AEF08 /* PokemonSpecies.swift in Sources */,
 				DA32A36D2AF4F291002AEF08 /* DetailViewModel.swift in Sources */,
-				DA32A3762AF51224002AEF08 /* TypeCell.swift in Sources */,
 				DA32A35A2AF4DC55002AEF08 /* WebService.swift in Sources */,
 				DA32A3782AF514CB002AEF08 /* SelectedPokemon.swift in Sources */,
 				DA32A3642AF4E14D002AEF08 /* CustomError.swift in Sources */,
