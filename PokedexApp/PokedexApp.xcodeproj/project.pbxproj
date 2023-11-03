@@ -30,6 +30,26 @@
 		DA32A3712AF505C3002AEF08 /* PokedexCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3702AF505C3002AEF08 /* PokedexCVC.swift */; };
 		DA32A3742AF5079D002AEF08 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DA32A3732AF5079D002AEF08 /* Kingfisher */; };
 		DA32A3782AF514CB002AEF08 /* SelectedPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3772AF514CB002AEF08 /* SelectedPokemon.swift */; };
+		DA32A38C2AF52BFD002AEF08 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A37A2AF52BFD002AEF08 /* Poppins-ExtraBoldItalic.ttf */; };
+		DA32A38D2AF52BFD002AEF08 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A37B2AF52BFD002AEF08 /* Poppins-BoldItalic.ttf */; };
+		DA32A38E2AF52BFD002AEF08 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A37C2AF52BFD002AEF08 /* Poppins-SemiBoldItalic.ttf */; };
+		DA32A38F2AF52BFD002AEF08 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A37D2AF52BFD002AEF08 /* Poppins-SemiBold.ttf */; };
+		DA32A3902AF52BFD002AEF08 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A37E2AF52BFD002AEF08 /* Poppins-Thin.ttf */; };
+		DA32A3912AF52BFD002AEF08 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A37F2AF52BFD002AEF08 /* Poppins-Bold.ttf */; };
+		DA32A3922AF52BFD002AEF08 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3802AF52BFD002AEF08 /* Poppins-Regular.ttf */; };
+		DA32A3932AF52BFD002AEF08 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3812AF52BFD002AEF08 /* Poppins-Light.ttf */; };
+		DA32A3942AF52BFD002AEF08 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3822AF52BFD002AEF08 /* Poppins-Black.ttf */; };
+		DA32A3952AF52BFD002AEF08 /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3832AF52BFD002AEF08 /* Poppins-ExtraLightItalic.ttf */; };
+		DA32A3962AF52BFD002AEF08 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3842AF52BFD002AEF08 /* Poppins-Italic.ttf */; };
+		DA32A3972AF52BFD002AEF08 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3852AF52BFD002AEF08 /* Poppins-Medium.ttf */; };
+		DA32A3982AF52BFD002AEF08 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3862AF52BFD002AEF08 /* Poppins-LightItalic.ttf */; };
+		DA32A3992AF52BFD002AEF08 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3872AF52BFD002AEF08 /* Poppins-ThinItalic.ttf */; };
+		DA32A39A2AF52BFD002AEF08 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3882AF52BFD002AEF08 /* Poppins-BlackItalic.ttf */; };
+		DA32A39B2AF52BFD002AEF08 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A3892AF52BFD002AEF08 /* Poppins-MediumItalic.ttf */; };
+		DA32A39C2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A38A2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf */; };
+		DA32A39D2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A38B2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf */; };
+		DA32A3A12AF59377002AEF08 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3A02AF59377002AEF08 /* CustomView.swift */; };
+		DA32A3A42AF5A0A0002AEF08 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3A32AF5A0A0002AEF08 /* Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +96,26 @@
 		DA32A36E2AF4FC85002AEF08 /* AllPokemons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPokemons.swift; sourceTree = "<group>"; };
 		DA32A3702AF505C3002AEF08 /* PokedexCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexCVC.swift; sourceTree = "<group>"; };
 		DA32A3772AF514CB002AEF08 /* SelectedPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPokemon.swift; sourceTree = "<group>"; };
+		DA32A37A2AF52BFD002AEF08 /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		DA32A37B2AF52BFD002AEF08 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
+		DA32A37C2AF52BFD002AEF08 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		DA32A37D2AF52BFD002AEF08 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		DA32A37E2AF52BFD002AEF08 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		DA32A37F2AF52BFD002AEF08 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		DA32A3802AF52BFD002AEF08 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		DA32A3812AF52BFD002AEF08 /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
+		DA32A3822AF52BFD002AEF08 /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Black.ttf"; sourceTree = "<group>"; };
+		DA32A3832AF52BFD002AEF08 /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		DA32A3842AF52BFD002AEF08 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
+		DA32A3852AF52BFD002AEF08 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		DA32A3862AF52BFD002AEF08 /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
+		DA32A3872AF52BFD002AEF08 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
+		DA32A3882AF52BFD002AEF08 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
+		DA32A3892AF52BFD002AEF08 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
+		DA32A38A2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
+		DA32A38B2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
+		DA32A3A02AF59377002AEF08 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		DA32A3A32AF5A0A0002AEF08 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +167,9 @@
 		DA32A3212AF4DABE002AEF08 /* PokedexApp */ = {
 			isa = PBXGroup;
 			children = (
+				DA32A3A22AF5A07F002AEF08 /* Extension */,
+				DA32A39F2AF5936D002AEF08 /* CustomView */,
+				DA32A3792AF52BE4002AEF08 /* Font */,
 				DA32A3672AF4EAA8002AEF08 /* Constants */,
 				DA32A3552AF4DBD1002AEF08 /* Supporting Files */,
 				DA32A3542AF4DBB5002AEF08 /* Model */,
@@ -170,7 +213,7 @@
 			children = (
 				DA32A3262AF4DABE002AEF08 /* HomepageVC.swift */,
 				DA32A3562AF4DC14002AEF08 /* DetailVC.swift */,
-				DA32A3702AF505C3002AEF08 /* PokedexCVC.swift */,
+				DA32A39E2AF535EA002AEF08 /* Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -214,6 +257,55 @@
 				DA32A3682AF4EAB4002AEF08 /* Constants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		DA32A3792AF52BE4002AEF08 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				DA32A3822AF52BFD002AEF08 /* Poppins-Black.ttf */,
+				DA32A3882AF52BFD002AEF08 /* Poppins-BlackItalic.ttf */,
+				DA32A37F2AF52BFD002AEF08 /* Poppins-Bold.ttf */,
+				DA32A37B2AF52BFD002AEF08 /* Poppins-BoldItalic.ttf */,
+				DA32A38A2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf */,
+				DA32A37A2AF52BFD002AEF08 /* Poppins-ExtraBoldItalic.ttf */,
+				DA32A38B2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf */,
+				DA32A3832AF52BFD002AEF08 /* Poppins-ExtraLightItalic.ttf */,
+				DA32A3842AF52BFD002AEF08 /* Poppins-Italic.ttf */,
+				DA32A3812AF52BFD002AEF08 /* Poppins-Light.ttf */,
+				DA32A3862AF52BFD002AEF08 /* Poppins-LightItalic.ttf */,
+				DA32A3852AF52BFD002AEF08 /* Poppins-Medium.ttf */,
+				DA32A3892AF52BFD002AEF08 /* Poppins-MediumItalic.ttf */,
+				DA32A3802AF52BFD002AEF08 /* Poppins-Regular.ttf */,
+				DA32A37D2AF52BFD002AEF08 /* Poppins-SemiBold.ttf */,
+				DA32A37C2AF52BFD002AEF08 /* Poppins-SemiBoldItalic.ttf */,
+				DA32A37E2AF52BFD002AEF08 /* Poppins-Thin.ttf */,
+				DA32A3872AF52BFD002AEF08 /* Poppins-ThinItalic.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		DA32A39E2AF535EA002AEF08 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DA32A3702AF505C3002AEF08 /* PokedexCVC.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		DA32A39F2AF5936D002AEF08 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				DA32A3A02AF59377002AEF08 /* CustomView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		DA32A3A22AF5A07F002AEF08 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DA32A3A32AF5A0A0002AEF08 /* Alert.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,8 +418,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA32A39D2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf in Resources */,
+				DA32A3952AF52BFD002AEF08 /* Poppins-ExtraLightItalic.ttf in Resources */,
+				DA32A3992AF52BFD002AEF08 /* Poppins-ThinItalic.ttf in Resources */,
+				DA32A3982AF52BFD002AEF08 /* Poppins-LightItalic.ttf in Resources */,
+				DA32A39A2AF52BFD002AEF08 /* Poppins-BlackItalic.ttf in Resources */,
+				DA32A3972AF52BFD002AEF08 /* Poppins-Medium.ttf in Resources */,
+				DA32A38E2AF52BFD002AEF08 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				DA32A3932AF52BFD002AEF08 /* Poppins-Light.ttf in Resources */,
+				DA32A39B2AF52BFD002AEF08 /* Poppins-MediumItalic.ttf in Resources */,
+				DA32A3902AF52BFD002AEF08 /* Poppins-Thin.ttf in Resources */,
+				DA32A38C2AF52BFD002AEF08 /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				DA32A3922AF52BFD002AEF08 /* Poppins-Regular.ttf in Resources */,
+				DA32A39C2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf in Resources */,
+				DA32A3912AF52BFD002AEF08 /* Poppins-Bold.ttf in Resources */,
+				DA32A3962AF52BFD002AEF08 /* Poppins-Italic.ttf in Resources */,
 				DA32A32F2AF4DAC0002AEF08 /* LaunchScreen.storyboard in Resources */,
+				DA32A38F2AF52BFD002AEF08 /* Poppins-SemiBold.ttf in Resources */,
+				DA32A3942AF52BFD002AEF08 /* Poppins-Black.ttf in Resources */,
 				DA32A32C2AF4DAC0002AEF08 /* Assets.xcassets in Resources */,
+				DA32A38D2AF52BFD002AEF08 /* Poppins-BoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +465,9 @@
 				DA32A3602AF4DC7D002AEF08 /* HomepagePokemonOutput.swift in Sources */,
 				DA32A35C2AF4DC5D002AEF08 /* WebServiceProtocol.swift in Sources */,
 				DA32A3272AF4DABE002AEF08 /* HomepageVC.swift in Sources */,
+				DA32A3A12AF59377002AEF08 /* CustomView.swift in Sources */,
 				DA32A3572AF4DC14002AEF08 /* DetailVC.swift in Sources */,
+				DA32A3A42AF5A0A0002AEF08 /* Alert.swift in Sources */,
 				DA32A35E2AF4DC73002AEF08 /* HomepageViewModel.swift in Sources */,
 				DA32A3662AF4E4E1002AEF08 /* DetailPokemonOutput.swift in Sources */,
 				DA32A36F2AF4FC85002AEF08 /* AllPokemons.swift in Sources */,
@@ -545,6 +657,7 @@
 				DEVELOPMENT_TEAM = 7YAHT2XZPP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PokedexApp/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Pokedex;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -572,6 +685,7 @@
 				DEVELOPMENT_TEAM = 7YAHT2XZPP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PokedexApp/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Pokedex;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -10,40 +10,77 @@ import Kingfisher
 
 class DetailVC: UIViewController, DetailPokemonOutput {
 	
+	var pokemonColor: UIColor? = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
+	var pokemon: Pokemon?
 	var detailViewModel: DetailViewModel?
-	
 	var selectedPokemon: SelectedPokemon?
+	var typesCount: Int = 0
+	var buttons = [UIButton]()
 	
-	var grassColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
+	private let buttonStackView: UIStackView = {
+		let stackView = UIStackView()
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.axis = .horizontal
+		stackView.spacing = 8
+		return stackView
+	}()
 	
-	private let pokeballImageView : UIImageView = {
+	private let backgroundImageView : UIImageView = {
 		let pokeballImageView = UIImageView()
 		pokeballImageView.translatesAutoresizingMaskIntoConstraints = false
-		pokeballImageView.image = UIImage(named: "Pokeball")
+		pokeballImageView.image = UIImage(named: "pokeball1")
 		pokeballImageView.alpha = CGFloat(0.1)
+		pokeballImageView.tintColor = .gray
 		return pokeballImageView
 	}()
+	
 	private let infoView : UIView = {
 		let infoView = UIView()
 		infoView.translatesAutoresizingMaskIntoConstraints = false
 		infoView.backgroundColor = .white
+		infoView.layer.cornerRadius = 10
 		return infoView
 	}()
 	
-	private let aboutTitleLabel : UILabel = {
-		let aboutTitleLabel = UILabel()
-		aboutTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		aboutTitleLabel.textAlignment = .center
-		aboutTitleLabel.text = "About"
-		aboutTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-		aboutTitleLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return aboutTitleLabel
+	let backButton: UIButton = {
+		let backButton = UIButton()
+		backButton.translatesAutoresizingMaskIntoConstraints = false
+		backButton.setImage(UIImage(named: "arrow_back"), for: .normal)
+		backButton.tintColor = .white
+		return backButton
 	}()
+	
+	private let pokemonNameLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 24, textAlignment: .left, textColor: .white, line: 0)
+	private let pokemonIdLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 12, textAlignment: .right, textColor: .white, line: 0)
+	
+	private let pokeImageView : UIImageView = {
+		let pokeballImageView = UIImageView()
+		pokeballImageView.translatesAutoresizingMaskIntoConstraints = false
+		return pokeballImageView
+	}()
+	
+	let backPokemonButton: UIButton = {
+		let backButton = UIButton()
+		backButton.translatesAutoresizingMaskIntoConstraints = false
+		backButton.setImage(UIImage(named: "left"), for: .normal)
+		backButton.tintColor = .white
+		return backButton
+	}()
+	
+	let nextPokemonButton: UIButton = {
+		let backButton = UIButton()
+		backButton.translatesAutoresizingMaskIntoConstraints = false
+		backButton.setImage(UIImage(named: "right"), for: .normal)
+		backButton.tintColor = .white
+		return backButton
+	}()
+	
+	private let aboutTitleLabel = CustomLabel(frame: .zero, text: "About", fontName: "Poppins-Bold", size: 16, textAlignment: .center, textColor: .black, line: 1)
 	
 	let weightDividerView: UIView = {
 		let dividerView = UIView()
 		dividerView.translatesAutoresizingMaskIntoConstraints = false
-		dividerView.backgroundColor = UIColor.gray
+		dividerView.backgroundColor = UIColor.systemGray3
 		return dividerView
 	}()
 	
@@ -54,124 +91,29 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return weightImageView
 	}()
 	
-	private let weightTitleLabel : UILabel = {
-		let weightTitleLabel = UILabel()
-		weightTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		weightTitleLabel.textAlignment = .center
-		weightTitleLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		weightTitleLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return weightTitleLabel
-	}()
-	private let weightValueLabel : UILabel = {
-		let weightLabel = UILabel()
-		weightLabel.translatesAutoresizingMaskIntoConstraints = false
-		weightLabel.textAlignment = .center
-		weightLabel.font = UIFont.boldSystemFont(ofSize: 12)
-		weightLabel.textColor = UIColor(red: 102 / 255.0, green: 102 / 255.0, blue: 102 / 255.0, alpha: 1)
-		return weightLabel
-	}()
+	private let weightTitleLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 12, textAlignment: .center, textColor: .black, line: 0)
+	private let weightValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 10, textAlignment: .center, textColor: .black, line: 0)
 	
 	private let heightImageView : UIImageView = {
 		let heightImageView = UIImageView()
 		heightImageView.translatesAutoresizingMaskIntoConstraints = false
-		heightImageView.image = UIImage(named: "weight")
+		heightImageView.image = UIImage(named: "height")
 		return heightImageView
 	}()
 	
-	private let heightTitleLabel : UILabel = {
-		let heightTitleLabel = UILabel()
-		heightTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		heightTitleLabel.textAlignment = .center
-		heightTitleLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		heightTitleLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return heightTitleLabel
-	}()
-	private let heightValueLabel : UILabel = {
-		let heightValueLabel = UILabel()
-		heightValueLabel.translatesAutoresizingMaskIntoConstraints = false
-		heightValueLabel.textAlignment = .center
-		heightValueLabel.font = UIFont.boldSystemFont(ofSize: 12)
-		heightValueLabel.textColor = UIColor(red: 102 / 255.0, green: 102 / 255.0, blue: 102 / 255.0, alpha: 1)
-		return heightValueLabel
-	}()
+	private let heightTitleLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 12, textAlignment: .center, textColor: .black, line: 0)
+	private let heightValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 10, textAlignment: .center, textColor: .black, line: 0)
 	
 	let heightDividerView: UIView = {
 		let dividerView = UIView()
 		dividerView.translatesAutoresizingMaskIntoConstraints = false
-		dividerView.backgroundColor = UIColor.gray
+		dividerView.backgroundColor = UIColor.systemGray3
 		return dividerView
 	}()
 	
-	private let movesTitleLabel : UILabel = {
-		let movesTitleLabel = UILabel()
-		movesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		movesTitleLabel.textAlignment = .center
-		movesTitleLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		movesTitleLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return movesTitleLabel
-	}()
-	private let movesValueLabel : UILabel = {
-		let movesValueLabel = UILabel()
-		movesValueLabel.translatesAutoresizingMaskIntoConstraints = false
-		movesValueLabel.textAlignment = .center
-		movesValueLabel.font = UIFont.boldSystemFont(ofSize: 12)
-		movesValueLabel.textColor = UIColor(red: 102 / 255.0, green: 102 / 255.0, blue: 102 / 255.0, alpha: 1)
-		movesValueLabel.numberOfLines = 2
-		return movesValueLabel
-	}()
-	
-	private let pokemonInfoLabel : UILabel = {
-		let pokemonInfoLabel = UILabel()
-		pokemonInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-		pokemonInfoLabel.textAlignment = .center
-		pokemonInfoLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		pokemonInfoLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		pokemonInfoLabel.numberOfLines = 1
-		return pokemonInfoLabel
-	}()
-	
-	private let typeButton1 : UIButton = {
-		let typeButton = UIButton()
-		typeButton.translatesAutoresizingMaskIntoConstraints = false
-		
-		typeButton.layer.cornerRadius = 10
-		
-		typeButton.backgroundColor = UIColor.blue
-		typeButton.clipsToBounds = true
-		typeButton.tintColor = UIColor.white
-		typeButton.setTitle("Poison", for: .normal)
-		
-		return typeButton
-	}()
-	let backButton: UIButton = {
-		let backButton = UIButton()
-		backButton.translatesAutoresizingMaskIntoConstraints = false
-		backButton.setImage(UIImage(systemName: "arrowshape.left.fill"), for: .normal)
-		backButton.tintColor = .white
-		return backButton
-	}()
-	private let pokemonNameLabel : UILabel = {
-		let label = UILabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = "Placeholder"
-		label.font = UIFont.boldSystemFont(ofSize: 24)
-		label.textColor = .white
-		return label
-	}()
-	
-	private let pokemonIdLabel : UILabel = {
-		let label = UILabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = "Placeholder"
-		label.font = UIFont.boldSystemFont(ofSize: 16)
-		label.textColor = .white
-		return label
-	}()
-	private let pokeImageView : UIImageView = {
-		let pokeballImageView = UIImageView()
-		pokeballImageView.translatesAutoresizingMaskIntoConstraints = false
-		return pokeballImageView
-	}()
+	private let movesTitleLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 12, textAlignment: .left, textColor: .black, line: 0)
+	private let movesValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 10, textAlignment: .center, textColor: .black, line: 0)
+	private let pokemonInfoLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 12, textAlignment: .left, textColor: .black, line: 0)
 	
 	private let baseStatsStackView: UIStackView = {
 		let stackView = UIStackView()
@@ -181,62 +123,14 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return stackView
 	}()
 	
-	private let baseTitleLabel : UILabel = {
-		let baseTitleLabel = UILabel()
-		baseTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		baseTitleLabel.textAlignment = .center
-		baseTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-		baseTitleLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return baseTitleLabel
-	}()
+	private let baseTitleLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 18, textAlignment: .center, textColor: .black, line: 0)
 	
-	private let hpLabel : UILabel = {
-		let hpLabel = UILabel()
-		hpLabel.translatesAutoresizingMaskIntoConstraints = false
-		hpLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		hpLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return hpLabel
-	}()
-	
-	private let atkLabel : UILabel = {
-		let atkLabel = UILabel()
-		atkLabel.translatesAutoresizingMaskIntoConstraints = false
-		atkLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		atkLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return atkLabel
-	}()
-	
-	private let defLabel : UILabel = {
-		let defLabel = UILabel()
-		defLabel.translatesAutoresizingMaskIntoConstraints = false
-		defLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		defLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return defLabel
-	}()
-	
-	private let satkLabel : UILabel = {
-		let satkLabel = UILabel()
-		satkLabel.translatesAutoresizingMaskIntoConstraints = false
-		satkLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		satkLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return satkLabel
-	}()
-	
-	private let sdefLabel : UILabel = {
-		let sdefLabel = UILabel()
-		sdefLabel.translatesAutoresizingMaskIntoConstraints = false
-		sdefLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		sdefLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return sdefLabel
-	}()
-	
-	private let spdLabel : UILabel = {
-		let spdLabel = UILabel()
-		spdLabel.translatesAutoresizingMaskIntoConstraints = false
-		spdLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		spdLabel.textColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		return spdLabel
-	}()
+	private let hpLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let atkLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let defLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let satkLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let sdefLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let spdLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
 	
 	private let baseValueStatsStackView: UIStackView = {
 		let stackView = UIStackView()
@@ -246,54 +140,12 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return stackView
 	}()
 	
-	
-	private let hpValueLabel : UILabel = {
-		let hpLabel = UILabel()
-		hpLabel.translatesAutoresizingMaskIntoConstraints = false
-		hpLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		hpLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return hpLabel
-	}()
-	
-	private let atkValueLabel : UILabel = {
-		let atkLabel = UILabel()
-		atkLabel.translatesAutoresizingMaskIntoConstraints = false
-		atkLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		atkLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return atkLabel
-	}()
-	
-	private let defValueLabel : UILabel = {
-		let defLabel = UILabel()
-		defLabel.translatesAutoresizingMaskIntoConstraints = false
-		defLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		defLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return defLabel
-	}()
-	
-	private let satkValueLabel : UILabel = {
-		let satkLabel = UILabel()
-		satkLabel.translatesAutoresizingMaskIntoConstraints = false
-		satkLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		satkLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return satkLabel
-	}()
-	
-	private let sdefValueLabel : UILabel = {
-		let sdefLabel = UILabel()
-		sdefLabel.translatesAutoresizingMaskIntoConstraints = false
-		sdefLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		sdefLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return sdefLabel
-	}()
-	
-	private let spdValueLabel : UILabel = {
-		let spdLabel = UILabel()
-		spdLabel.translatesAutoresizingMaskIntoConstraints = false
-		spdLabel.font = UIFont.boldSystemFont(ofSize: 14)
-		spdLabel.textColor = UIColor(red: 29 / 255.0, green: 29 / 255.0, blue: 29 / 255.0, alpha: 1)
-		return spdLabel
-	}()
+	private let hpValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let atkValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let defValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let satkValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let sdefValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let spdValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
 	
 	private let progressStackView: UIStackView = {
 		let stackView = UIStackView()
@@ -345,9 +197,203 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return progressBar
 	}()
 	
+	let baseDividerView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.backgroundColor = .systemGray3
+		return view
+	}()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		setupConstraints()
+		backButton.addTarget(self, action: #selector(backFunc), for: .touchUpInside)
+		backPokemonButton.addTarget(self, action: #selector(backPokemonFunc), for: .touchUpInside)
+		nextPokemonButton.addTarget(self, action: #selector(nextPokemonFunc), for: .touchUpInside)
+	}
+	
+	init(detailViewModel: DetailViewModel? = nil) {
+		self.detailViewModel = detailViewModel
+		super.init(nibName: nil, bundle: nil)
+		self.detailViewModel?.detailOutput = self
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func setPokemon(pokemon: Pokemon?, error: String?) {
+		DispatchQueue.main.async{
+			if let error{
+				let alert = self.view.addAlert(title: "Error", message: error)
+				self.present(alert, animated: true)
+			}else{
+				for subview in self.buttonStackView.arrangedSubviews {
+					subview.removeFromSuperview()
+				}
+				if let pokemon{
+					self.pokemon = pokemon
+					if (pokemon.id == 1){
+						self.backPokemonButton.isHidden = true
+					}else{
+						self.backPokemonButton.isHidden = false
+					}
+					let finalFileName = pokemon.id
+					if let url = URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/\(String(format:"%03d", finalFileName)).png") {
+						self.pokeImageView.kf.setImage(with: url)
+					}
+					self.typesCount = pokemon.types.count
+					self.heightTitleLabel.text = "\(pokemon.height) m"
+					self.weightTitleLabel.text = "\(pokemon.weight) kg"
+					self.movesTitleLabel.text = "\(pokemon.moves[0].move.name.capitalized)\n\(pokemon.moves[1].move.name.capitalized)"
+					self.pokemonNameLabel.text = pokemon.name.capitalized
+					self.pokemonIdLabel.text = "#\(String(format:"%03d", pokemon.id))"
+					self.buttonsRename()
+					self.buttons = []
+					self.view.backgroundColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.aboutTitleLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.baseTitleLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.hpLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.atkLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.defLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.satkLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.sdefLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.spdLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.hpProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.atkProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.defProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.satkProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.sdefProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					self.spdProgressBar.progressTintColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
+					
+					self.hpProgressBar.setProgress(0.0, animated: false)
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						self.hpProgressBar.setProgress((Float(pokemon.stats[0].baseStat) / 225.0), animated: false)
+						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
+							self.hpProgressBar.layoutIfNeeded()
+						})
+					}
+					self.hpValueLabel.text = String(pokemon.stats[0].baseStat)
+					
+					self.atkProgressBar.setProgress(0.0, animated: false)
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						self.atkProgressBar.setProgress((Float(pokemon.stats[1].baseStat) / 225.0), animated: false)
+						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
+							self.atkProgressBar.layoutIfNeeded()
+						})
+					}
+					self.atkValueLabel.text = String(pokemon.stats[1].baseStat)
+					
+					self.defProgressBar.setProgress(0.0, animated: false)
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						self.defProgressBar.setProgress((Float(pokemon.stats[2].baseStat) / 225.0), animated: false)
+						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
+							self.defProgressBar.layoutIfNeeded()
+						})
+					}
+					self.defValueLabel.text = String(pokemon.stats[2].baseStat)
+					
+					self.satkProgressBar.setProgress(0.0, animated: false)
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						self.satkProgressBar.setProgress((Float(pokemon.stats[3].baseStat) / 225.0), animated: false)
+						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
+							self.satkProgressBar.layoutIfNeeded()
+						})
+					}
+					self.satkValueLabel.text = String(pokemon.stats[3].baseStat)
+					
+					self.sdefProgressBar.setProgress(0.0, animated: false)
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						self.sdefProgressBar.setProgress((Float(pokemon.stats[4].baseStat) / 225.0), animated: false)
+						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
+							self.sdefProgressBar.layoutIfNeeded()
+						})
+					}
+					self.sdefValueLabel.text = String(pokemon.stats[4].baseStat)
+					
+					self.spdProgressBar.setProgress(0.0, animated: false)
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						self.spdProgressBar.setProgress((Float(pokemon.stats[5].baseStat) / 225.0), animated: false)
+						UIView.animate(withDuration: 1, delay: 0, options: [], animations: { [unowned self] in
+							self.spdProgressBar.layoutIfNeeded()
+						})
+					}
+					self.spdValueLabel.text = String(pokemon.stats[5].baseStat)
+				}
+			}
+		}
+	}
+	
+	func setPokemonDescription(pokemonSpecies: PokemonSpecies?, error: String?) {
+		DispatchQueue.main.async{
+			if let error{
+				let alert = self.view.addAlert(title: "Error", message: error)
+				self.present(alert, animated: true)
+			}else{
+				if let pokemonSpecies{
+					var allWords = String()
+					let words = pokemonSpecies.flavorTextEntries.first?.flavorText.split(separator: "\n")
+					for word in words!{
+						allWords.append("\(word)  ")
+					}
+					self.pokemonInfoLabel.text = "\(allWords)"
+				}
+			}
+		}
+	}
+	
+	func setColor(pokemonType: String) -> UIColor{
+		if pokemonType == "Grass"{
+			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
+		}else if pokemonType == "Poison"{
+			return UIColor(red: 164 / 255.0, green: 62 / 255.0, blue: 158 / 255.0, alpha: 1)
+		}else if pokemonType == "Fire"{
+			return UIColor(red: 245 / 255.0, green: 125 / 255.0, blue: 49 / 255.0, alpha: 1)
+		}else if pokemonType == "Water"{
+			return UIColor(red: 100 / 255.0, green: 147 / 255.0, blue: 235 / 255.0, alpha: 1)
+		}else if pokemonType == "Bug"{
+			return UIColor(red: 167 / 255.0, green: 183 / 255.0, blue: 35 / 255.0, alpha: 1)
+		}else if pokemonType == "Flying"{
+			return UIColor(red: 168 / 255.0, green: 145 / 255.0, blue: 236 / 255.0, alpha: 1)
+		}else if pokemonType == "Electric"{
+			return UIColor(red: 249 / 255.0, green: 207 / 255.0, blue: 48 / 255.0, alpha: 1)
+		}else if pokemonType == "Ghost"{
+			return UIColor(red: 112 / 255.0, green: 85 / 255.0, blue: 155 / 255.0, alpha: 1)
+		}else if pokemonType == "Normal"{
+			return UIColor(red: 170 / 255.0, green: 166 / 255.0, blue: 127 / 255.0, alpha: 1)
+		}else if pokemonType == "Psychic"{
+			return UIColor(red: 251 / 255.0, green: 85 / 255.0, blue: 132 / 255.0, alpha: 1)
+		}else if pokemonType == "Steel"{
+			return UIColor(red: 183 / 255.0, green: 185 / 255.0, blue: 208 / 255.0, alpha: 1)
+		}else if pokemonType == "Rock"{
+			return UIColor(red: 182 / 255.0, green: 158 / 255.0, blue: 49 / 255.0, alpha: 1)
+		}else{
+			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
+		}
+	}
+	
+	func buttonsRename() {
+		for i in 0...typesCount - 1 {
+			let typeButton = UIButton()
+			typeButton.translatesAutoresizingMaskIntoConstraints = false
+			typeButton.layer.cornerRadius = 15
+			typeButton.backgroundColor = setColor(pokemonType: pokemon!.types[i].type.name.capitalized)
+			typeButton.clipsToBounds = true
+			typeButton.tintColor = UIColor.white
+			typeButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+			typeButton.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 12)
+			buttons.append(typeButton)
+			if let pokemon {
+				typeButton.setTitle("    \(pokemon.types[i].type.name.capitalized)    ", for: .normal)
+			}
+		}
 		
+		for button in buttons {
+			buttonStackView.addArrangedSubview(button)
+		}
+	}
+	
+	func setupConstraints() {
 		let fileName = SelectedPokemon.shared.selected?.url
 		let fileArray = fileName?.split(separator: "/")
 		let finalFileName = fileArray?.last
@@ -380,9 +426,11 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		view.addSubview(pokemonNameLabel)
 		view.addSubview(pokemonIdLabel)
 		view.addSubview(backButton)
-		view.addSubview(pokeballImageView)
+		view.addSubview(backgroundImageView)
 		view.addSubview(infoView)
 		view.addSubview(aboutTitleLabel)
+		view.addSubview(backPokemonButton)
+		view.addSubview(nextPokemonButton)
 		infoView.addSubview(weightTitleLabel)
 		infoView.addSubview(weightValueLabel)
 		infoView.addSubview(weightImageView)
@@ -394,90 +442,12 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		infoView.addSubview(heightDividerView)
 		infoView.addSubview(weightDividerView)
 		infoView.addSubview(pokemonInfoLabel)
-		infoView.addSubview(typeButton1)
+		infoView.addSubview(buttonStackView)
 		infoView.addSubview(pokeImageView)
+		infoView.addSubview(baseDividerView)
 		
 		view.backgroundColor = .white
-		view.backgroundColor = grassColor
 		
-		setupConstraints()
-		
-		weightValueLabel.text = "Weight Value"
-		weightTitleLabel.text = "Weight"
-		
-		heightValueLabel.text = "Height Value"
-		heightTitleLabel.text = "Height"
-		
-		movesValueLabel.text = "Moves Value"
-		movesTitleLabel.text = "Moves"
-		pokemonInfoLabel.text = "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger."
-		
-		
-		baseTitleLabel.text = "Base Stats"
-		hpLabel.text = "HP"
-		atkLabel.text = "ATK"
-		defLabel.text = "DEF"
-		satkLabel.text = "SATK"
-		sdefLabel.text = "SDEF"
-		spdLabel.text = "SPD"
-		
-		hpValueLabel.text = "213"
-		atkValueLabel.text = "312"
-		defValueLabel.text = "132"
-		satkValueLabel.text = "312"
-		sdefValueLabel.text = "123"
-		spdValueLabel.text = "312"
-		
-		hpProgressBar.progress = 0.5
-		atkProgressBar.progress = 0.9
-		defProgressBar.progress = 0.6
-		satkProgressBar.progress = 0.7
-		sdefProgressBar.progress = 0.1
-		spdProgressBar.progress = 0.2
-		
-		backButton.addTarget(self, action: #selector(backFunc), for: .touchUpInside)
-	}
-	
-	@objc func backFunc(){
-		self.dismiss(animated: true)
-	}
-	
-	init(detailViewModel: DetailViewModel? = nil) {
-		self.detailViewModel = detailViewModel
-		super.init(nibName: nil, bundle: nil)
-		self.detailViewModel?.detailOutput = self
-	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-	
-	func setPokemon(pokemon: Pokemon?, error: String?) {
-		DispatchQueue.main.async{
-			if let pokemon{
-				let finalFileName = pokemon.id
-				if let url = URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/\(String(format:"%03d", finalFileName)).png") {
-					self.pokeImageView.kf.setImage(with: url)
-				}
-				self.heightTitleLabel.text = "\(pokemon.height)"
-				self.weightTitleLabel.text = "\(pokemon.weight)"
-				self.movesTitleLabel.text = "\(pokemon.moves[0].move.name)\n\(pokemon.moves[1].move.name)"
-				self.pokemonNameLabel.text = "\(pokemon.name)"
-				self.pokemonIdLabel.text = "#\(pokemon.id)"
-				self.typeButton1.setTitle("\(pokemon.types.first!.type.name)", for: .normal)
-			}
-		}
-	}
-	
-	func setPokemonDescription(pokemonSpecies: PokemonSpecies?, error: String?) {
-		DispatchQueue.main.async{
-			if let pokemonSpecies{
-				self.pokemonInfoLabel.text = "\(pokemonSpecies.flavorTextEntries.first!.flavorText)"
-			}
-		}
-	}
-	
-	func setupConstraints() {
 		NSLayoutConstraint.activate([
 			backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 			backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
@@ -485,71 +455,81 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			pokemonNameLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 			pokemonNameLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 8),
 			
-			pokemonIdLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-			pokemonIdLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+			pokemonIdLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+			pokemonIdLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 			
-			pokeballImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-			pokeballImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
-			pokeballImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: (view.frame.width - (206))),
-			pokeballImageView.heightAnchor.constraint(equalToConstant: 208),
+			backgroundImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+			backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
+			backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: (view.frame.width - (206))),
+			backgroundImageView.heightAnchor.constraint(equalToConstant: 208),
 			
-			infoView.topAnchor.constraint(equalTo: pokeballImageView.bottomAnchor, constant: 8),
-			infoView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 4),
-			infoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4),
-			infoView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4),
-			infoView.heightAnchor.constraint(equalToConstant: 700),
+			infoView.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 50),
+			infoView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
+			infoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -6),
+			infoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 			
-			pokeImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
+			pokeImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 170),
 			pokeImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			pokeImageView.heightAnchor.constraint(equalToConstant: 200),
 			pokeImageView.widthAnchor.constraint(equalToConstant: 200),
 			
-			typeButton1.topAnchor.constraint(equalTo: infoView.topAnchor, constant: 56),
-			typeButton1.heightAnchor.constraint(equalToConstant: 30),
-			typeButton1.widthAnchor.constraint(equalToConstant: 100),
-			typeButton1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			backPokemonButton.bottomAnchor.constraint(equalTo: infoView.topAnchor, constant: -15),
+			backPokemonButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
+			nextPokemonButton.bottomAnchor.constraint(equalTo: infoView.topAnchor, constant: -15),
+			nextPokemonButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
 			
-			aboutTitleLabel.topAnchor.constraint(equalTo: typeButton1.bottomAnchor, constant: 16),
+			buttonStackView.topAnchor.constraint(equalTo: pokeImageView.bottomAnchor, constant: 20),
+			buttonStackView.heightAnchor.constraint(equalToConstant: 30),
+			buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			
+			aboutTitleLabel.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 16),
 			aboutTitleLabel.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 20),
 			aboutTitleLabel.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -20),
 			
-			weightImageView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 16),
-			weightImageView.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 20),
+			// MARK: - Height
+			heightTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 30),
+			heightTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			
-			weightTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 16),
-			weightTitleLabel.leadingAnchor.constraint(equalTo: weightImageView.trailingAnchor, constant: 8),
+			heightValueLabel.topAnchor.constraint(equalTo: heightTitleLabel.bottomAnchor, constant: 20),
+			heightValueLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			
-			weightValueLabel.topAnchor.constraint(equalTo: weightTitleLabel.bottomAnchor, constant: 4),
-			weightValueLabel.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 20),
-			
-			weightDividerView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 15),
-			weightDividerView.widthAnchor.constraint(equalToConstant: 1),
-			weightDividerView.leadingAnchor.constraint(equalTo: weightValueLabel.trailingAnchor, constant: 25),
-			weightDividerView.heightAnchor.constraint(equalTo: infoView.heightAnchor, multiplier: 0.07),
-			
-			heightImageView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 16),
-			heightImageView.leadingAnchor.constraint(equalTo: weightDividerView.leadingAnchor, constant: 20),
-			
-			heightTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 16),
-			heightTitleLabel.leadingAnchor.constraint(equalTo: heightImageView.trailingAnchor, constant: 8),
-			
-			heightValueLabel.topAnchor.constraint(equalTo: heightTitleLabel.bottomAnchor, constant: 4),
-			heightValueLabel.leadingAnchor.constraint(equalTo: weightDividerView.leadingAnchor, constant: 20),
-			
-			heightDividerView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 15),
+			heightDividerView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 30),
 			heightDividerView.widthAnchor.constraint(equalToConstant: 1),
-			heightDividerView.leadingAnchor.constraint(equalTo: heightValueLabel.trailingAnchor, constant: 25),
-			heightDividerView.heightAnchor.constraint(equalTo: infoView.heightAnchor, multiplier: 0.07),
+			heightDividerView.leadingAnchor.constraint(equalTo: heightValueLabel.trailingAnchor, constant: 35),
+			heightDividerView.heightAnchor.constraint(equalTo: infoView.heightAnchor, multiplier: 0.1),
 			
-			movesTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 16),
-			movesTitleLabel.leadingAnchor.constraint(equalTo: heightDividerView.leadingAnchor, constant: 20),
+			heightImageView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 30),
+			heightImageView.trailingAnchor.constraint(equalTo: heightValueLabel.leadingAnchor),
+			heightImageView.heightAnchor.constraint(equalToConstant: 16),
+			heightImageView.widthAnchor.constraint(equalToConstant: 16),
 			
-			movesValueLabel.topAnchor.constraint(equalTo: movesTitleLabel.bottomAnchor, constant: 4),
-			movesValueLabel.leadingAnchor.constraint(equalTo: heightDividerView.leadingAnchor, constant: 20),
+			// MARK: - Weight
+			weightImageView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 30),
+			weightImageView.rightAnchor.constraint(equalTo: weightTitleLabel.leftAnchor, constant: -10),
+			weightImageView.heightAnchor.constraint(equalToConstant: 16),
+			weightImageView.widthAnchor.constraint(equalToConstant: 16),
+			
+			weightTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 30),
+			weightTitleLabel.rightAnchor.constraint(equalTo: weightDividerView.leftAnchor, constant: -30),
+			
+			weightValueLabel.topAnchor.constraint(equalTo: weightTitleLabel.bottomAnchor, constant: 20),
+			weightValueLabel.rightAnchor.constraint(equalTo: weightDividerView.leftAnchor, constant: -30),
+			
+			weightDividerView.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 25),
+			weightDividerView.widthAnchor.constraint(equalToConstant: 1),
+			weightDividerView.trailingAnchor.constraint(equalTo: heightImageView.leadingAnchor, constant: -20),
+			weightDividerView.heightAnchor.constraint(equalTo: infoView.heightAnchor, multiplier: 0.1),
+			
+			// MARK: - Moves
+			movesTitleLabel.topAnchor.constraint(equalTo: aboutTitleLabel.bottomAnchor, constant: 25),
+			movesTitleLabel.leadingAnchor.constraint(equalTo: heightDividerView.leadingAnchor, constant: 25),
+			
+			movesValueLabel.topAnchor.constraint(equalTo: movesTitleLabel.bottomAnchor, constant: 5),
+			movesValueLabel.leadingAnchor.constraint(equalTo: heightDividerView.leadingAnchor, constant: 25),
 			
 			pokemonInfoLabel.topAnchor.constraint(equalTo: movesValueLabel.bottomAnchor, constant: 40),
-			pokemonInfoLabel.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 20),
-			pokemonInfoLabel.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -20),
+			pokemonInfoLabel.centerXAnchor.constraint(equalTo: infoView.centerXAnchor),
+			//MARK: - Base Stat
 			
 			baseTitleLabel.topAnchor.constraint(equalTo: pokemonInfoLabel.bottomAnchor, constant: 25),
 			baseTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -558,14 +538,49 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			baseStatsStackView.topAnchor.constraint(equalTo: baseTitleLabel.bottomAnchor, constant: 25),
 			baseStatsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 			
+			baseDividerView.topAnchor.constraint(equalTo: baseTitleLabel.bottomAnchor, constant: 25),
+			baseDividerView.widthAnchor.constraint(equalToConstant: 1),
+			baseDividerView.leadingAnchor.constraint(equalTo: baseStatsStackView.trailingAnchor, constant: (baseStatsStackView.frame.width + 20)),
+			baseDividerView.heightAnchor.constraint(equalTo: baseStatsStackView.heightAnchor, multiplier: 1.0),
+			
 			baseValueStatsStackView.topAnchor.constraint(equalTo: baseTitleLabel.bottomAnchor, constant: 25),
-			baseValueStatsStackView.leadingAnchor.constraint(equalTo: baseStatsStackView.trailingAnchor, constant: 20),
+			baseValueStatsStackView.leadingAnchor.constraint(equalTo: baseDividerView.trailingAnchor, constant: 20),
 			
 			progressStackView.topAnchor.constraint(equalTo: baseTitleLabel.bottomAnchor, constant: 30),
 			progressStackView.leadingAnchor.constraint(equalTo: baseValueStatsStackView.trailingAnchor, constant: 20),
-			progressStackView.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -20)
+			progressStackView.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -20),
+			
+			// MARK: - ProgressView Height
+			hpProgressBar.heightAnchor.constraint(equalToConstant: 6),
+			atkProgressBar.heightAnchor.constraint(equalToConstant: 6),
+			defProgressBar.heightAnchor.constraint(equalToConstant: 6),
+			spdProgressBar.heightAnchor.constraint(equalToConstant: 6),
+			satkProgressBar.heightAnchor.constraint(equalToConstant: 6),
+			sdefProgressBar.heightAnchor.constraint(equalToConstant: 6),
 		])
+		
+		aboutTitleLabel.text = "About"
+		weightValueLabel.text = "Weight"
+		heightValueLabel.text = "Height"
+		movesValueLabel.text = "Moves"
+		baseTitleLabel.text = "Base Stats"
+		hpLabel.text = "HP"
+		atkLabel.text = "ATK"
+		defLabel.text = "DEF"
+		satkLabel.text = "SATK"
+		sdefLabel.text = "SDEF"
+		spdLabel.text = "SPD"
+	}
+	
+	@objc func backPokemonFunc(){
+		detailViewModel?.getBackPokemon(withId: self.pokemon!.id)
+	}
+	
+	@objc func nextPokemonFunc(){
+		detailViewModel?.getNextPokemon(withId: self.pokemon!.id)
+	}
+	
+	@objc func backFunc(){
+		self.dismiss(animated: true)
 	}
 }
-
-

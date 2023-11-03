@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 class HomepageVC: UIViewController, HomepagePokemonOutput {
-
+	
 	var homepageViewModel: HomepageViewModel?
 	
 	var pokes: AllPokemons?
@@ -21,6 +21,11 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .vertical
 		layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		layout.minimumInteritemSpacing = 10
+		layout.minimumLineSpacing = 10
+		let width = UIScreen.main.bounds.width
+		let itemWidth = (width - 44) / 3
+		layout.itemSize = CGSize(width: itemWidth, height: 140)
 		let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		collectionView.register(PokedexCVC.self, forCellWithReuseIdentifier: "pokeCell")
@@ -45,14 +50,19 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	}
 	
 	func setAllPokemons(pokemons: AllPokemons?, error: String?){
-		self.pokes = pokemons
-		DispatchQueue.main.async{
-			self.pokeCollectionView.reloadData()
+		if let error{
+			let alert = view.addAlert(title: "Error!", message: error)
+			present(alert, animated: true)
+		}else{
+			self.pokes = pokemons
+			DispatchQueue.main.async{
+				self.pokeCollectionView.reloadData()
+			}
 		}
 	}
 	func setSearchPokemon(pokemon: Pokemon?, error: String?) {
 		if let p = pokemon{
-			var poke = AllPokemons(count: 1, next: "", previous: .none, results: [SinglePokemon(name: p.name, url: "https://pokeapi.co/api/v2/pokemon/\(p.id)/")])
+			let poke = AllPokemons(count: 1, next: "", previous: .none, results: [SinglePokemon(name: p.name, url: "https://pokeapi.co/api/v2/pokemon/\(p.id)/")])
 			self.pokes = poke
 			DispatchQueue.main.async{
 				self.pokeCollectionView.reloadData()
@@ -76,14 +86,14 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		imageView2.contentMode = .scaleAspectFit
 		let viewForImage2 = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
 		viewForImage2.addSubview(imageView2)
-
+		
 		let stackView = UIStackView(arrangedSubviews: [viewForImage, viewForImage2])
-		stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+		stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
 		stackView.isLayoutMarginsRelativeArrangement = true
 		stackView.axis = .horizontal
 		stackView.alignment = .center
-		stackView.spacing = 30
-
+		stackView.spacing = 40
+		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
 		
 		pokeCollectionView.delegate = self
@@ -91,14 +101,14 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		pokeCollectionView.isScrollEnabled = true
 		pokeCollectionView.showsVerticalScrollIndicator = false
 		
-		pokeCollectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+		pokeCollectionView.contentInset = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 10)
 		pokeCollectionView.layer.cornerRadius = 15
 		pokeCollectionView.layer.masksToBounds = true
 		
 		view.addSubview(pokeCollectionView)
 		
 		NSLayoutConstraint.activate([
-			pokeCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			pokeCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
 			pokeCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
 			pokeCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 			pokeCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -8),
@@ -110,11 +120,26 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		searchController.obscuresBackgroundDuringPresentation = false
 		
 		searchController.searchBar.placeholder = "Search"
-		searchController.searchBar.tintColor = .red
+		searchController.searchBar.tintColor = .black
 		searchController.searchBar.searchTextField.backgroundColor = .white
-		searchController.searchBar.layer.cornerRadius = 20
 		searchController.searchBar.clipsToBounds = true
 		searchController.searchBar.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
+		searchController.searchBar.searchTextField.leftView?.tintColor = .black
+		searchController.searchBar.searchTextField.backgroundColor = .white
+		if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+			searchTextField.translatesAutoresizingMaskIntoConstraints = false
+			NSLayoutConstraint.activate([
+				searchTextField.heightAnchor.constraint(equalToConstant: 40),
+				searchTextField.leadingAnchor.constraint(equalTo: searchController.searchBar.leadingAnchor, constant: 16),
+				searchTextField.trailingAnchor.constraint(equalTo: searchController.searchBar.trailingAnchor, constant: -16),
+				searchTextField.centerYAnchor.constraint(equalTo: searchController.searchBar.centerYAnchor, constant: 0)
+			])
+			searchTextField.clipsToBounds = true
+			searchTextField.layer.cornerRadius = 20.0
+		}
+		if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+			textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.font : UIFont(name: "Poppins-Light", size: 13)!])
+		}
 		navigationItem.searchController = searchController
 		definesPresentationContext = true
 	}
@@ -133,13 +158,11 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 		let fileName = pokes?.results[indexPath.item].url
 		let fileArray = fileName?.split(separator: "/")
 		let finalFileName = fileArray?.last
+		cell.lblId.text = "#\(finalFileName!)"
 		if let url = URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/\(String(format:"%03d", Int(finalFileName!)!)).png") {
-            cell.imgPoke.kf.setImage(with: url)
-        }
+			cell.imgPoke.kf.setImage(with: url)
+		}
 		return cell
-	}
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return CGSize(width: 105, height: 140)
 	}
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 		return 16 //vertically

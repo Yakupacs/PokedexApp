@@ -24,8 +24,24 @@ class PokedexCVC: UICollectionViewCell {
 	let lblPoke: UILabel = {
 		let label = UILabel()
 		label.textColor = UIColor.black
-		label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
 		label.translatesAutoresizingMaskIntoConstraints = false
+		label.font = UIFont(name: "Poppins-Light", size: 12)
+		return label
+	}()
+	
+	let grayBackgroundView: UIView = {
+		let view = UIView()
+		view.backgroundColor = .systemGray6
+		view.layer.cornerRadius = 15
+		view.translatesAutoresizingMaskIntoConstraints = false
+		return view
+	}()
+	
+	let lblId: UILabel = {
+		let label = UILabel()
+		label.textColor = UIColor.gray
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.font = UIFont(name: "Poppins-Medium", size: 10)
 		return label
 	}()
 	
@@ -42,18 +58,33 @@ class PokedexCVC: UICollectionViewCell {
 	}
 	
 	func addViews(){
-		addSubview(imgPoke)
-		addSubview(lblPoke)
+		lblId.text = "#1"
+		addSubview(lblId)
+		addSubview(grayBackgroundView)
+		grayBackgroundView.addSubview(imgPoke)
+		grayBackgroundView.addSubview(lblPoke)
 		
 		imgPoke.widthAnchor.constraint(equalToConstant: 90).isActive = true
 		imgPoke.heightAnchor.constraint(equalToConstant: 90).isActive = true
 		imgPoke.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-		imgPoke.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20).isActive = true
+		imgPoke.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -5).isActive = true
 		
-		lblPoke.topAnchor.constraint(equalTo: imgPoke.bottomAnchor, constant: 10).isActive = true
+		lblPoke.topAnchor.constraint(equalTo: imgPoke.bottomAnchor, constant: 5).isActive = true
 		lblPoke.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
 		lblPoke.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-		lblPoke.textAlignment = .center
+		lblPoke.textAlignment = .center		
+		
+		lblId.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+		lblId.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+		lblId.textAlignment = .center
+
+		NSLayoutConstraint.activate([
+			grayBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
+			grayBackgroundView.leftAnchor.constraint(equalTo: leftAnchor),
+			grayBackgroundView.rightAnchor.constraint(equalTo: rightAnchor),
+			grayBackgroundView.heightAnchor.constraint(equalToConstant: 60)
+		])
+
 	}
 	func addShadow() {
 		contentView.layer.cornerRadius = 10
@@ -64,7 +95,7 @@ class PokedexCVC: UICollectionViewCell {
 		layer.shadowColor = UIColor.black.cgColor
 		layer.shadowOffset = CGSize(width: 0, height: 2)
 		layer.shadowRadius = 4
-		layer.shadowOpacity = 0.3
+		layer.shadowOpacity = 0.2
 		layer.masksToBounds = false
 		layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
 		layer.shouldRasterize = true
