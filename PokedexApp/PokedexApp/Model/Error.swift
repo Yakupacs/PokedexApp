@@ -8,7 +8,8 @@
 import Foundation
 
 enum CustomError: Error {
-	case fileNotFound
+	case urlError
+	case serverError
+	case decodingError
 	case networkError
-	case invalidInput
 }

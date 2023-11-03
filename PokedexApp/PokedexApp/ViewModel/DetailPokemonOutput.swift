@@ -8,5 +8,6 @@
 import Foundation
 
 protocol DetailPokemonOutput{
-	func setNextPokemon(nextPokemon: Pokemon?, error: String?)
+	func setPokemon(pokemon: Pokemon?, error: String?)
+	func setPokemonDescription(pokemonSpecies: PokemonSpecies?, error: String?)
 }

@@ -12,9 +12,10 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 	}
-
+	
 	func setAllPokemons(pokemons: [Pokemon]?, error: String?) {
-
+		
 	}
+
 }
 

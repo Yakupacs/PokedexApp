@@ -18,11 +18,14 @@
 		DA32A3572AF4DC14002AEF08 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3562AF4DC14002AEF08 /* DetailVC.swift */; };
 		DA32A35A2AF4DC55002AEF08 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3592AF4DC55002AEF08 /* WebService.swift */; };
 		DA32A35C2AF4DC5D002AEF08 /* WebServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A35B2AF4DC5D002AEF08 /* WebServiceProtocol.swift */; };
-		DA32A35E2AF4DC73002AEF08 /* PokemonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A35D2AF4DC73002AEF08 /* PokemonViewModel.swift */; };
+		DA32A35E2AF4DC73002AEF08 /* HomepageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A35D2AF4DC73002AEF08 /* HomepageViewModel.swift */; };
 		DA32A3602AF4DC7D002AEF08 /* HomepagePokemonOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A35F2AF4DC7D002AEF08 /* HomepagePokemonOutput.swift */; };
 		DA32A3622AF4DCEB002AEF08 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3612AF4DCEB002AEF08 /* Pokemon.swift */; };
 		DA32A3642AF4E14D002AEF08 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3632AF4E14D002AEF08 /* Error.swift */; };
 		DA32A3662AF4E4E1002AEF08 /* DetailPokemonOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3652AF4E4E1002AEF08 /* DetailPokemonOutput.swift */; };
+		DA32A3692AF4EAB4002AEF08 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3682AF4EAB4002AEF08 /* Constants.swift */; };
+		DA32A36B2AF4ED6D002AEF08 /* PokemonSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A36A2AF4ED6D002AEF08 /* PokemonSpecies.swift */; };
+		DA32A36D2AF4F291002AEF08 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A36C2AF4F291002AEF08 /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,11 +61,14 @@
 		DA32A3562AF4DC14002AEF08 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		DA32A3592AF4DC55002AEF08 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		DA32A35B2AF4DC5D002AEF08 /* WebServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceProtocol.swift; sourceTree = "<group>"; };
-		DA32A35D2AF4DC73002AEF08 /* PokemonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonViewModel.swift; sourceTree = "<group>"; };
+		DA32A35D2AF4DC73002AEF08 /* HomepageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewModel.swift; sourceTree = "<group>"; };
 		DA32A35F2AF4DC7D002AEF08 /* HomepagePokemonOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepagePokemonOutput.swift; sourceTree = "<group>"; };
 		DA32A3612AF4DCEB002AEF08 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		DA32A3632AF4E14D002AEF08 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		DA32A3652AF4E4E1002AEF08 /* DetailPokemonOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPokemonOutput.swift; sourceTree = "<group>"; };
+		DA32A3682AF4EAB4002AEF08 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA32A36A2AF4ED6D002AEF08 /* PokemonSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonSpecies.swift; sourceTree = "<group>"; };
+		DA32A36C2AF4F291002AEF08 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 		DA32A3212AF4DABE002AEF08 /* PokedexApp */ = {
 			isa = PBXGroup;
 			children = (
+				DA32A3672AF4EAA8002AEF08 /* Constants */,
 				DA32A3552AF4DBD1002AEF08 /* Supporting Files */,
 				DA32A3542AF4DBB5002AEF08 /* Model */,
 				DA32A3582AF4DC49002AEF08 /* Service */,
@@ -142,9 +149,10 @@
 		DA32A3522AF4DBAB002AEF08 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				DA32A35D2AF4DC73002AEF08 /* PokemonViewModel.swift */,
+				DA32A35D2AF4DC73002AEF08 /* HomepageViewModel.swift */,
 				DA32A35F2AF4DC7D002AEF08 /* HomepagePokemonOutput.swift */,
 				DA32A3652AF4E4E1002AEF08 /* DetailPokemonOutput.swift */,
+				DA32A36C2AF4F291002AEF08 /* DetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -163,6 +171,7 @@
 			children = (
 				DA32A3612AF4DCEB002AEF08 /* Pokemon.swift */,
 				DA32A3632AF4E14D002AEF08 /* Error.swift */,
+				DA32A36A2AF4ED6D002AEF08 /* PokemonSpecies.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +195,14 @@
 				DA32A35B2AF4DC5D002AEF08 /* WebServiceProtocol.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		DA32A3672AF4EAA8002AEF08 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				DA32A3682AF4EAB4002AEF08 /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,13 +339,16 @@
 				DA32A35C2AF4DC5D002AEF08 /* WebServiceProtocol.swift in Sources */,
 				DA32A3272AF4DABE002AEF08 /* HomepageVC.swift in Sources */,
 				DA32A3572AF4DC14002AEF08 /* DetailVC.swift in Sources */,
-				DA32A35E2AF4DC73002AEF08 /* PokemonViewModel.swift in Sources */,
+				DA32A35E2AF4DC73002AEF08 /* HomepageViewModel.swift in Sources */,
 				DA32A3662AF4E4E1002AEF08 /* DetailPokemonOutput.swift in Sources */,
 				DA32A3622AF4DCEB002AEF08 /* Pokemon.swift in Sources */,
 				DA32A3232AF4DABE002AEF08 /* AppDelegate.swift in Sources */,
+				DA32A36B2AF4ED6D002AEF08 /* PokemonSpecies.swift in Sources */,
+				DA32A36D2AF4F291002AEF08 /* DetailViewModel.swift in Sources */,
 				DA32A35A2AF4DC55002AEF08 /* WebService.swift in Sources */,
 				DA32A3642AF4E14D002AEF08 /* Error.swift in Sources */,
 				DA32A3252AF4DABE002AEF08 /* SceneDelegate.swift in Sources */,
+				DA32A3692AF4EAB4002AEF08 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
