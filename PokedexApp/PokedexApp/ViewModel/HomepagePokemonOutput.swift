@@ -8,5 +8,6 @@
 import Foundation
 
 protocol HomepagePokemonOutput{
-	func setAllPokemons(pokemons: [Pokemon]?, error: String?)
+	func setAllPokemons(pokemons: AllPokemons?, error: String?)
+	func setSearchPokemon(pokemon: Pokemon?, error: String?)
 }

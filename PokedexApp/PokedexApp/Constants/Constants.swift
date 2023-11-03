@@ -14,6 +14,6 @@ struct Constants{
 	}
 	
 	struct URLs{
-		static let allPokemons = "pokemon?limit=100000&offset=0"
+//		static let allPokemons = "pokemon?limit=100000&offset=0"
 	}
 }

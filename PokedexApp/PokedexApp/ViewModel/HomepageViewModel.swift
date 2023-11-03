@@ -16,7 +16,7 @@ class HomepageViewModel{
 		self.webService = webService
 	}
 	
-	func fetchAllPokemons(){
+	func getAllPokemons(){
 		webService?.fetchAllPokemons(completion: { result in
 			switch result{
 			case .success(let pokemons):
@@ -36,21 +36,21 @@ class HomepageViewModel{
 		})
 	}
 	
-	func searchAllPokemonsByName(){
-		webService?.searchAllPokemonsByName(completion: { result in
+	func searchAllPokemonsByName(withName name: String){
+		webService?.searchAllPokemonsByName(withName: name, completion: { result in
 			switch result{
-			case .success(let pokemons):
-				self.homepageOutput?.setAllPokemons(pokemons: pokemons, error: nil)
+			case .success(let pokemon):
+				self.homepageOutput?.setSearchPokemon(pokemon: pokemon, error: nil)
 			case .failure(let customError):
 				switch customError{
 				case .decodingError:
-					self.homepageOutput?.setAllPokemons(pokemons: nil, error: "Error! Decoding error.")
+					self.homepageOutput?.setSearchPokemon(pokemon: nil, error: "Error! Decoding error.")
 				case .networkError:
-					self.homepageOutput?.setAllPokemons(pokemons: nil, error: "Error! Network error.")
+					self.homepageOutput?.setSearchPokemon(pokemon: nil, error: "Error! Network error.")
 				case .serverError:
-					self.homepageOutput?.setAllPokemons(pokemons: nil, error: "Error! Server error.")
+					self.homepageOutput?.setSearchPokemon(pokemon: nil, error: "Error! Server error.")
 				case .urlError:
-					self.homepageOutput?.setAllPokemons(pokemons: nil, error: "Error! URL error.")
+					self.homepageOutput?.setSearchPokemon(pokemon: nil, error: "Error! URL error.")
 				}
 			}
 		})
