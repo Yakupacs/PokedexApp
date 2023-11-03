@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailVC: UIViewController, DetailPokemonOutput {
 	
 	var detailViewModel: DetailViewModel?
 	
-	var selectedPokemon: Pokemon?
+	var selectedPokemon: SelectedPokemon?
 	
 	var grassColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 	
@@ -139,8 +140,35 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return pokemonInfoLabel
 	}()
 	
+	private let typeButton1 : UIButton = {
+		let typeButton = UIButton()
+		typeButton.translatesAutoresizingMaskIntoConstraints = false
+		
+		typeButton.layer.cornerRadius = 10
+		
+		typeButton.backgroundColor = UIColor.blue
+		typeButton.clipsToBounds = true
+		typeButton.tintColor = UIColor.white
+		typeButton.setTitle("Poison", for: .normal)
+		
+		return typeButton
+	}()
+	let backButton: UIButton = {
+		let backButton = UIButton()
+		backButton.translatesAutoresizingMaskIntoConstraints = false
+		backButton.setImage(UIImage(systemName: "arrowshape.left.fill"), for: .normal)
+		backButton.tintColor = .black
+		return backButton
+	}()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		let fileName = SelectedPokemon.shared.selected?.url
+		let fileArray = fileName?.split(separator: "/")
+		let finalFileName = fileArray?.last
+		detailViewModel?.getPokemon(withId: Int(finalFileName!)!)
+		detailViewModel?.getPokemonDescription(withId: Int(finalFileName!)!)
 		
 		view.addSubview(pokeballImageView)
 		view.addSubview(infoView)
@@ -189,12 +217,15 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 	}
 	
 	func setPokemon(pokemon: Pokemon?, error: String?) {
-		print("setPokemon:")
-		print(pokemon!.name)
+		DispatchQueue.main.async{
+			let finalFileName = pokemon?.id
+			if let url = URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/\(String(format:"%03d", finalFileName!)).png") {
+				self.pokeballImageView.kf.setImage(with: url)
+			}
+		}
 	}
 	
 	func setPokemonDescription(pokemonSpecies: PokemonSpecies?, error: String?) {
-		print("setPokemonDescription:")
 		print(pokemonSpecies!.flavorTextEntries.first!.flavorText)
 	}
 	
@@ -210,6 +241,8 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 			infoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4),
 			infoView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4),
 			infoView.heightAnchor.constraint(equalToConstant: 700),
+			
+			
 			
 			typeCollectionView.topAnchor.constraint(equalTo: infoView.topAnchor, constant: 56),
 			typeCollectionView.heightAnchor.constraint(equalToConstant: 30),

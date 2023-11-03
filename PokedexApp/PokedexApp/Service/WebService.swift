@@ -9,7 +9,6 @@ import Foundation
 
 class WebService: WebServiceProtocol{
 
-	
 	private let decoder: JSONDecoder = {
 		let decoder = JSONDecoder()
 		decoder.keyDecodingStrategy = .convertFromSnakeCase

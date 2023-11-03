@@ -18,16 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let scene = (scene as? UIWindowScene) else { return }
 		
 		window = UIWindow(windowScene: scene)
-		var webServiceProtocol: WebServiceProtocol = WebService()
-		var detailViewModel = DetailViewModel(webService: webServiceProtocol)
-		window?.rootViewController = DetailVC(detailViewModel: detailViewModel)
+		let webServiceProtocol: WebServiceProtocol = WebService()
+		let homepageViewModel = HomepageViewModel(webService: webServiceProtocol)
+		window?.rootViewController = UINavigationController(rootViewController: HomepageVC(homepageViewModel: homepageViewModel)) 
 		window?.makeKeyAndVisible()
-		
-//		window = UIWindow(windowScene: scene)
-//		let webServiceProtocol: WebServiceProtocol = WebService()
-//		let homepageViewModel = HomepageViewModel(webService: webServiceProtocol)
-//		window?.rootViewController = UINavigationController(rootViewController: HomepageVC(homepageViewModel: homepageViewModel)) 
-//		window?.makeKeyAndVisible()
 	}
 
 	func sceneDidDisconnect(_ scene: UIScene) {

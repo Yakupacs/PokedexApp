@@ -147,7 +147,15 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
 		return 0 //horizontally
 	}
-	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		var selectedPokemon = pokes?.results[indexPath.row]
+		SelectedPokemon.shared.selected = pokes?.results[indexPath.row]
+		var webServiceProtocol: WebServiceProtocol = WebService()
+		var detailViewModel = DetailViewModel(webService: webServiceProtocol)
+		let detailVC = DetailVC(detailViewModel: detailViewModel)
+		detailVC.modalPresentationStyle = .fullScreen
+		present(detailVC, animated: true)
+	}
 }
 
 extension HomepageVC: UISearchResultsUpdating{
