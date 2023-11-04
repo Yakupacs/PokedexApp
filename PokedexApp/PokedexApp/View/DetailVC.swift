@@ -206,6 +206,11 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        let fileName = SelectedPokemon.shared.selected?.url
+        let fileArray = fileName?.split(separator: "/")
+        let finalFileName = fileArray?.last
+        detailViewModel?.getPokemon(withId: Int(finalFileName!)!)
+        detailViewModel?.getPokemonDescription(withId: Int(finalFileName!)!)
 		setupConstraints()
 		backButton.addTarget(self, action: #selector(backFunc), for: .touchUpInside)
 		backPokemonButton.addTarget(self, action: #selector(backPokemonFunc), for: .touchUpInside)
@@ -321,12 +326,6 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 // MARK: - Appearance
 extension DetailVC{
 	func setupConstraints() {
-		let fileName = SelectedPokemon.shared.selected?.url
-		let fileArray = fileName?.split(separator: "/")
-		let finalFileName = fileArray?.last
-		detailViewModel?.getPokemon(withId: Int(finalFileName!)!)
-		detailViewModel?.getPokemonDescription(withId: Int(finalFileName!)!)
-		
 		infoView.addSubview(baseTitleLabel)
 		infoView.addSubview(baseStatsStackView)
 		baseStatsStackView.addArrangedSubview(hpLabel)
