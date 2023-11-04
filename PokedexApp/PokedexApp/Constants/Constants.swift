@@ -11,9 +11,11 @@ struct Constants{
 	
 	struct Paths {
 		static let baseURL = "https://pokeapi.co/api/v2/"
+		static let pokemonPath = "pokemon/"
+		static let pokemonSpecies = "pokemon-species/"
 	}
 	
 	struct URLs{
-//		static let allPokemons = "pokemon?limit=100000&offset=0"
+		static let allPokemons = "pokemon?limit=151&offset=0"
 	}
 }

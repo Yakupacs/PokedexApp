@@ -206,10 +206,10 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 			popUpInsideLabel.topAnchor.constraint(equalTo: popUpView.topAnchor, constant: 16),
 			popUpInsideLabel.leftAnchor.constraint(equalTo: popUpView.leftAnchor, constant: 20),
 			popUpInsideLabel.rightAnchor.constraint(equalTo: popUpView.rightAnchor, constant: -20),
-			numbersRadioButton.topAnchor.constraint(equalTo: popUpInsideLabel.bottomAnchor, constant: 25),
-			numbersRadioButton.leadingAnchor.constraint(equalTo: popUpInsideView.leadingAnchor, constant: 5),
-			namesRadioButton.topAnchor.constraint(equalTo: numbersRadioButton.bottomAnchor, constant: 5),
-			namesRadioButton.leadingAnchor.constraint(equalTo: popUpInsideView.leadingAnchor, constant: 5),
+			numbersRadioButton.topAnchor.constraint(equalTo: popUpInsideView.topAnchor, constant: 16),
+			numbersRadioButton.centerXAnchor.constraint(equalTo: popUpInsideView.centerXAnchor, constant: -5),
+			namesRadioButton.bottomAnchor.constraint(equalTo: popUpInsideView.bottomAnchor, constant: -16),
+			namesRadioButton.leadingAnchor.constraint(equalTo: numbersRadioButton.leadingAnchor),
 		])
 	}
 	
@@ -281,7 +281,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		definesPresentationContext = true
 	}
 	func orderAlphabetic(){
-		var re = pokes?.results
+		let re = pokes?.results
 		pokes?.results = (re!.sorted(by: { $0.name < $1.name} ))
 		pokeCollectionView.reloadData()
 	}

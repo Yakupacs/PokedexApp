@@ -17,7 +17,7 @@ class WebService: WebServiceProtocol{
 	
 	// MARK: - FetchAllPokemons
 	func fetchAllPokemons(completion: @escaping (Result<AllPokemons, CustomError>) -> ()){
-		guard let url = URL(string: Constants.Paths.baseURL + "pokemon?limit=151&offset=0") else {
+		guard let url = URL(string: Constants.Paths.baseURL + Constants.URLs.allPokemons) else {
 			return completion(.failure(.urlError))
 		}
 		
@@ -38,7 +38,7 @@ class WebService: WebServiceProtocol{
 	}
 	// MARK: - SearchAllPokemonsByName
 	func searchAllPokemonsByName(withName name: String, completion: @escaping (Result<Pokemon, CustomError>) -> ()){
-		guard let url = URL(string: Constants.Paths.baseURL + "pokemon/\(name)") else {
+		guard let url = URL(string: Constants.Paths.baseURL + Constants.Paths.pokemonPath + name) else {
 			return completion(.failure(.urlError))
 		}
 		
@@ -59,7 +59,7 @@ class WebService: WebServiceProtocol{
 	}
 	// MARK: - getPokemon
 	func fetchPokemon(withId id: Int,completion: @escaping (Result<Pokemon, CustomError>) -> ()){
-		guard let url = URL(string: Constants.Paths.baseURL + "pokemon/\(id)") else {
+		guard let url = URL(string: Constants.Paths.baseURL + Constants.Paths.pokemonPath + String(id)) else {
 			return completion(.failure(.urlError))
 		}
 		
@@ -80,7 +80,7 @@ class WebService: WebServiceProtocol{
 	}
 	// MARK: - fetchPokemonDescription
 	func fetchPokemonDescription(withId id: Int, completion: @escaping (Result<PokemonSpecies, CustomError>) -> Void) {
-		guard let url = URL(string: Constants.Paths.baseURL + "pokemon-species/\(id)") else {
+		guard let url = URL(string: Constants.Paths.baseURL + Constants.Paths.pokemonSpecies + String(id)) else {
 			return completion(.failure(.urlError))
 		}
 		

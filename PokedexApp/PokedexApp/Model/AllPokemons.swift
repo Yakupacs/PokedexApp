@@ -26,6 +26,8 @@ class JSONNull: Codable, Hashable {
 	public var hashValue: Int {
 		return 0
 	}
+	
+	func hash(into hasher: inout Hasher) {}
 
 	public init() {}
 

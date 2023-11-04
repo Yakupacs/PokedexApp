@@ -221,8 +221,8 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 	func setPokemonDescription(pokemonSpecies: PokemonSpecies?, error: String?) {
 		DispatchQueue.main.async{
 			if let error{
-				let alert = self.view.addAlert(title: "Error", message: error)
-				self.present(alert, animated: true)
+				print(error)
+				self.pokemonInfoLabel.text = "The pokemon descriptions not found."
 			}else{
 				if let pokemonSpecies{
 					var allWords = String()

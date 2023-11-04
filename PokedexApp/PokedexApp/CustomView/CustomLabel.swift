@@ -1,8 +1,8 @@
 //
-//  CustomView.swift
+//  CustomLabel.swift
 //  PokedexApp
 //
-//  Created by Yakup on 3.11.2023.
+//  Created by Yakup on 4.11.2023.
 //
 
 import Foundation
@@ -26,16 +26,3 @@ class CustomLabel: UILabel{
 		fatalError("init(coder:) has not been implemented")
 	}
 }
-
-class CustomProgressView: UIProgressView{
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		translatesAutoresizingMaskIntoConstraints = false
-	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-}
-
-
