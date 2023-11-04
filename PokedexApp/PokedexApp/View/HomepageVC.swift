@@ -16,7 +16,30 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	
 	private let searchController = UISearchController(searchResultsController: nil)
 	private var isSearchBarVisible = false
-	
+    
+    let imgPokeball: UIImageView = {
+        let image = UIImage(named: "Pokeball")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        return imageView
+    }()
+    let imgPokedex: UIImageView = {
+        let image = UIImage(named: "Pokeedex")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        return imageView
+    }()
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 10
+        return stackView
+    }()
 	let pokeCollectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .vertical
@@ -75,26 +98,9 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	private func setupViews(){
 		view.backgroundColor = UIColor(red: 220/255, green: 10/255, blue: 45/255, alpha: 1)
 		
-		let image = UIImage(named: "Pokeball")
-		let imageView = UIImageView(image: image)
-		imageView.contentMode = .scaleAspectFit
-		let viewForImage = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-		viewForImage.addSubview(imageView)
-		
-		let image2 = UIImage(named: "Pokeedex")
-		let imageView2 = UIImageView(image: image2)
-		imageView2.contentMode = .scaleAspectFit
-		let viewForImage2 = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
-		viewForImage2.addSubview(imageView2)
-		
-		let stackView = UIStackView(arrangedSubviews: [viewForImage, viewForImage2])
-		stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
-		stackView.isLayoutMarginsRelativeArrangement = true
-		stackView.axis = .horizontal
-		stackView.alignment = .center
-		stackView.spacing = 40
-		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
+        stackView.addArrangedSubview(imgPokeball)
+        stackView.addArrangedSubview(imgPokedex)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
 		
 		pokeCollectionView.delegate = self
 		pokeCollectionView.dataSource = self
@@ -115,34 +121,35 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		])
 		
 	}
-	private func setupSearchController() {
-		searchController.searchResultsUpdater = self
-		searchController.obscuresBackgroundDuringPresentation = false
-		
-		searchController.searchBar.placeholder = "Search"
-		searchController.searchBar.tintColor = .black
-		searchController.searchBar.searchTextField.backgroundColor = .white
-		searchController.searchBar.clipsToBounds = true
-		searchController.searchBar.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
-		searchController.searchBar.searchTextField.leftView?.tintColor = .black
-		searchController.searchBar.searchTextField.backgroundColor = .white
-		if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-			searchTextField.translatesAutoresizingMaskIntoConstraints = false
-			NSLayoutConstraint.activate([
-				searchTextField.heightAnchor.constraint(equalToConstant: 40),
-				searchTextField.leadingAnchor.constraint(equalTo: searchController.searchBar.leadingAnchor, constant: 16),
-				searchTextField.trailingAnchor.constraint(equalTo: searchController.searchBar.trailingAnchor, constant: -16),
-				searchTextField.centerYAnchor.constraint(equalTo: searchController.searchBar.centerYAnchor, constant: 0)
-			])
-			searchTextField.clipsToBounds = true
-			searchTextField.layer.cornerRadius = 20.0
-		}
-		if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-			textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.font : UIFont(name: "Poppins-Light", size: 13)!])
-		}
-		navigationItem.searchController = searchController
-		definesPresentationContext = true
-	}
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.searchTextField.backgroundColor = .white
+        searchController.searchBar.clipsToBounds = true
+        searchController.searchBar.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
+        searchController.searchBar.searchTextField.leftView?.tintColor = .black
+        searchController.searchBar.searchTextField.backgroundColor = .white
+        searchController.searchBar.showsCancelButton = false
+        if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            searchTextField.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                searchTextField.heightAnchor.constraint(equalToConstant: 40),
+                searchTextField.leadingAnchor.constraint(equalTo: searchController.searchBar.leadingAnchor, constant: 16),
+                searchTextField.trailingAnchor.constraint(equalTo: searchController.searchBar.trailingAnchor, constant: -80),
+                searchTextField.centerYAnchor.constraint(equalTo: searchController.searchBar.centerYAnchor, constant: 0)
+            ])
+            searchTextField.clipsToBounds = true
+            searchTextField.layer.cornerRadius = 20.0
+        }
+        if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.font : UIFont(name: "Poppins-Light", size: 13)!])
+        }
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
 }
 
 extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
