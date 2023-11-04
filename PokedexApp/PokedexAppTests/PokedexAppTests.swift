@@ -21,6 +21,10 @@ final class PokedexAppTests: XCTestCase {
 	override func setUpWithError() throws {
 		webService = MockWebService()
 		homepageViewModel = HomepageViewModel(webService: webService)
+        homepageOutput = MockHomepageViewModelOutput()
+        homepageViewModel.homepageOutput = homepageOutput
+        detailOutput = MockDetailViewModelOutput()
+        detailViewModel.detailOutput = detailOutput
 	}
 	override func tearDownWithError() throws {
 		homepageViewModel = nil
@@ -28,7 +32,7 @@ final class PokedexAppTests: XCTestCase {
 		webService = nil
 	}
 	func testFetchAllPokemon_whenAPISuccess_showsAllPokemons() throws{
-		var allPokemons = AllPokemons(count: 151, next: "", previous: .none, results: [SinglePokemon(name: "Pikachu", url: "")])
+		let allPokemons = AllPokemons(count: 151, next: "", previous: .none, results: [SinglePokemon(name: "Pikachu", url: "")])
 		
 		webService.fetchAllPokemonMockResult = .success(allPokemons)
 		
@@ -38,7 +42,7 @@ final class PokedexAppTests: XCTestCase {
 		XCTAssertEqual(homepageOutput.allPokemons?.results.first?.name, "Pikachu")
 	}
 	func testSearchPokemonsByName_whenAPISuccess_showsSearchPokemon() throws{
-		var searchPokemon = Pokemon(id: 1, name: "Pikachu", types: [PType(slot: 0, type: Species(name: "", url: ""))], height: 0, weight: 0, stats: [Stat(baseStat: 0, effort: 0, stat: Species(name: "", url: ""))], moves: [Move(move: Species(name: "", url: ""))])
+		let searchPokemon = Pokemon(id: 1, name: "Pikachu", types: [PType(slot: 0, type: Species(name: "", url: ""))], height: 0, weight: 0, stats: [Stat(baseStat: 0, effort: 0, stat: Species(name: "", url: ""))], moves: [Move(move: Species(name: "", url: ""))])
 		
 		webService.fetchPokemonMockResult = .success(searchPokemon)
 		
@@ -113,15 +117,17 @@ final class PokedexAppTests: XCTestCase {
 		}
 	}
 	class MockDetailViewModelOutput: DetailPokemonOutput{
-		var pokemon: Pokemon?
-		var pokemonSpecies: PokemonSpecies?
-
-		func setPokemon(pokemon: PokedexApp.Pokemon?, error: String?) {
-			self.pokemon = pokemon
-		}
-		func setPokemonDescription(pokemonSpecies: PokedexApp.PokemonSpecies?, error: String?) {
-			self.pokemonSpecies = pokemonSpecies
-		}
+        var pokemon: Pokemon?
+        var pokemonSpecies: PokemonSpecies?
+        
+        func setPokemon(pokemon: PokedexApp.Pokemon?, error: String?) {
+            if let pokemon{
+                self.pokemon = pokemon
+            }
+        }
+        func setPokemonDescription(pokemonSpecies: PokedexApp.PokemonSpecies?, error: String?) {
+            self.pokemonSpecies = pokemonSpecies
+        }
 	}
 }
 
