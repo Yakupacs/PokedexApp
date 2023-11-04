@@ -13,6 +13,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	var homepageViewModel: HomepageViewModel?
 	
 	var pokes: AllPokemons?
+	var popUpBool = false
 	
 	private let searchController = UISearchController(searchResultsController: nil)
 	private var isSearchBarVisible = false
@@ -53,6 +54,38 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		collectionView.register(PokedexCVC.self, forCellWithReuseIdentifier: "pokeCell")
 		return collectionView
+	}()
+	let popUpView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.backgroundColor = .red
+		view.layer.cornerRadius = 12
+		return view
+	}()
+	let popUpInsideView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.backgroundColor = .white
+		view.layer.cornerRadius = 8
+		return view
+	}()
+	let popUpInsideLabel: UILabel = {
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.font = UIFont(name: "Poppins-Bold", size: 12)
+		label.text = "Sort by:"
+		label.textColor = .white
+		return label
+	}()
+	
+	let filterButton: UIButton = {
+		let button = UIButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.layer.cornerRadius = 16
+		button.backgroundColor = .white
+		button.setTitleColor(.black, for: .normal)
+		button.setImage(UIImage(named: "a"), for: .normal)
+		return button
 	}()
 	
 	override func viewDidLoad() {
@@ -101,6 +134,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
         stackView.addArrangedSubview(imgPokeball)
         stackView.addArrangedSubview(imgPokedex)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
+		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: filterButton)
 		
 		pokeCollectionView.delegate = self
 		pokeCollectionView.dataSource = self
@@ -112,19 +146,57 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		pokeCollectionView.layer.masksToBounds = true
 		
 		view.addSubview(pokeCollectionView)
+		view.addSubview(filterButton)
+		view.addSubview(popUpView)
+		popUpView.addSubview(popUpInsideView)
+		popUpView.addSubview(popUpInsideLabel)
 		
+		self.popUpView.layer.zPosition = 0
+		filterButton.addTarget(self, action: #selector(clickedFilter), for: .touchUpInside)
+		self.popUpView.isHidden = true
+
 		NSLayoutConstraint.activate([
 			pokeCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
 			pokeCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
 			pokeCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 			pokeCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -8),
+			filterButton.heightAnchor.constraint(equalToConstant: 32),
+			filterButton.widthAnchor.constraint(equalToConstant: 32),
+			popUpView.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 200),
+			popUpView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			popUpView.heightAnchor.constraint(equalToConstant: 132),
+			popUpView.widthAnchor.constraint(equalToConstant: 113),
+			popUpInsideView.bottomAnchor.constraint(equalTo: popUpView.bottomAnchor, constant: -4),
+			popUpInsideView.leftAnchor.constraint(equalTo: popUpView.leftAnchor, constant: 4),
+			popUpInsideView.rightAnchor.constraint(equalTo: popUpView.rightAnchor, constant: -4),
+			popUpInsideView.widthAnchor.constraint(equalToConstant: 105),
+			popUpInsideView.heightAnchor.constraint(equalToConstant: 80),
+			popUpInsideLabel.topAnchor.constraint(equalTo: popUpView.topAnchor, constant: 16),
+			popUpInsideLabel.leftAnchor.constraint(equalTo: popUpView.leftAnchor, constant: 20),
+			popUpInsideLabel.rightAnchor.constraint(equalTo: popUpView.rightAnchor, constant: -20),
 		])
-		
 	}
+	
+	@objc func clickedFilter(){
+		if popUpBool == false{
+			popUpBool = true
+			self.popUpView.isHidden = false
+			UIView.animate(withDuration: 1) {
+				self.popUpView.frame.origin.y -= 800
+			}
+		}else{
+			popUpBool = false
+			UIView.animate(withDuration: 1) {
+				self.popUpView.frame.origin.y += 800
+			} completion: { _ in
+				self.popUpView.isHidden = true
+			}
+		}
+	}
+	
     private func setupSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        
         searchController.searchBar.placeholder = "Search"
         searchController.searchBar.tintColor = .white
         searchController.searchBar.searchTextField.backgroundColor = .white
@@ -132,14 +204,14 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
         searchController.searchBar.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
         searchController.searchBar.searchTextField.leftView?.tintColor = .black
         searchController.searchBar.searchTextField.backgroundColor = .white
-        searchController.searchBar.showsCancelButton = false
+//        searchController.searchBar.showsCancelButton = false
         if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            searchTextField.translatesAutoresizingMaskIntoConstraints = false
+//            searchTextField.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 searchTextField.heightAnchor.constraint(equalToConstant: 40),
                 searchTextField.leadingAnchor.constraint(equalTo: searchController.searchBar.leadingAnchor, constant: 16),
-                searchTextField.trailingAnchor.constraint(equalTo: searchController.searchBar.trailingAnchor, constant: -80),
-                searchTextField.centerYAnchor.constraint(equalTo: searchController.searchBar.centerYAnchor, constant: 0)
+                searchTextField.trailingAnchor.constraint(equalTo: searchController.searchBar.trailingAnchor, constant: -16),
+                searchTextField.centerYAnchor.constraint(equalTo: searchController.searchBar.centerYAnchor, constant: 0),
             ])
             searchTextField.clipsToBounds = true
             searchTextField.layer.cornerRadius = 20.0
