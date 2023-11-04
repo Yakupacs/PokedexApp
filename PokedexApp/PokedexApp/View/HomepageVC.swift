@@ -257,7 +257,6 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		searchController.searchBar.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
 		searchController.searchBar.searchTextField.leftView?.tintColor = .black
 		searchController.searchBar.searchTextField.backgroundColor = .white
-		//        searchController.searchBar.showsCancelButton = false
 		if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
 			//            searchTextField.translatesAutoresizingMaskIntoConstraints = false
 			NSLayoutConstraint.activate([
