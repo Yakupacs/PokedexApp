@@ -338,7 +338,7 @@ extension DetailVC{
 			infoView.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 50),
 			infoView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
 			infoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -6),
-			infoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			infoView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10),
 			
 			pokeImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 170),
 			pokeImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),

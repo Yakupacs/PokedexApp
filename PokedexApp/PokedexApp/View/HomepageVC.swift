@@ -18,30 +18,30 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	
 	private let searchController = UISearchController(searchResultsController: nil)
 	private var isSearchBarVisible = false
-    
-    let imgPokeball: UIImageView = {
-        let image = UIImage(named: "Pokeball")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        return imageView
-    }()
-    let imgPokedex: UIImageView = {
-        let image = UIImage(named: "Pokeedex")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        return imageView
-    }()
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 10
-        return stackView
-    }()
+	
+	let imgPokeball: UIImageView = {
+		let image = UIImage(named: "Pokeball")
+		let imageView = UIImageView(image: image)
+		imageView.contentMode = .scaleAspectFit
+		imageView.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+		return imageView
+	}()
+	let imgPokedex: UIImageView = {
+		let image = UIImage(named: "Pokeedex")
+		let imageView = UIImageView(image: image)
+		imageView.contentMode = .scaleAspectFit
+		imageView.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+		return imageView
+	}()
+	let stackView: UIStackView = {
+		let stackView = UIStackView()
+		stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+		stackView.isLayoutMarginsRelativeArrangement = true
+		stackView.axis = .horizontal
+		stackView.alignment = .center
+		stackView.spacing = 10
+		return stackView
+	}()
 	let pokeCollectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .vertical
@@ -78,6 +78,25 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		label.textColor = .white
 		return label
 	}()
+	let numbersRadioButton: UIButton = {
+		let radioButton = UIButton()
+		radioButton.isSelected = true
+		radioButton.translatesAutoresizingMaskIntoConstraints = false
+		radioButton.setTitle(" Numbers", for: .normal)
+		radioButton.setTitleColor(.black, for: .normal)
+		radioButton.titleLabel?.font = UIFont(name: "Poppins", size: 10)
+		radioButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
+		return radioButton
+	}()
+	let namesRadioButton: UIButton = {
+		let radioButton = UIButton()
+		radioButton.translatesAutoresizingMaskIntoConstraints = false
+		radioButton.setTitleColor(.black, for: .normal)
+		radioButton.setTitle(" Name", for: .normal)
+		radioButton.titleLabel?.font = UIFont(name: "Poppins", size: 10)
+		radioButton.setImage(UIImage(systemName: "circle"), for: .normal)
+		return radioButton
+	}()
 	
 	let filterButton: UIButton = {
 		let button = UIButton()
@@ -85,7 +104,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		button.layer.cornerRadius = 16
 		button.backgroundColor = .white
 		button.setTitleColor(.black, for: .normal)
-		button.setImage(UIImage(named: "a"), for: .normal)
+		button.setImage(UIImage(named: "orderID"), for: .normal)
 		return button
 	}()
 	
@@ -133,9 +152,9 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	private func setupViews(){
 		view.backgroundColor = UIColor(red: 220/255, green: 10/255, blue: 45/255, alpha: 1)
 		
-        stackView.addArrangedSubview(imgPokeball)
-        stackView.addArrangedSubview(imgPokedex)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
+		stackView.addArrangedSubview(imgPokeball)
+		stackView.addArrangedSubview(imgPokedex)
+		navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
 		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: filterButton)
 		
 		pokeCollectionView.delegate = self
@@ -152,11 +171,15 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		view.addSubview(popUpView)
 		popUpView.addSubview(popUpInsideView)
 		popUpView.addSubview(popUpInsideLabel)
+		popUpInsideView.addSubview(numbersRadioButton)
+		popUpInsideView.addSubview(namesRadioButton)
+		numbersRadioButton.addTarget(self, action: #selector(radioButtonTapped), for: .touchUpInside)
+		namesRadioButton.addTarget(self, action: #selector(radioButtonTapped), for: .touchUpInside)
 		
 		self.popUpView.layer.zPosition = 0
 		filterButton.addTarget(self, action: #selector(clickedFilter), for: .touchUpInside)
 		self.popUpView.isHidden = true
-
+		
 		NSLayoutConstraint.activate([
 			pokeCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
 			pokeCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
@@ -176,7 +199,35 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 			popUpInsideLabel.topAnchor.constraint(equalTo: popUpView.topAnchor, constant: 16),
 			popUpInsideLabel.leftAnchor.constraint(equalTo: popUpView.leftAnchor, constant: 20),
 			popUpInsideLabel.rightAnchor.constraint(equalTo: popUpView.rightAnchor, constant: -20),
+			numbersRadioButton.topAnchor.constraint(equalTo: popUpInsideLabel.bottomAnchor, constant: 25),
+			numbersRadioButton.leadingAnchor.constraint(equalTo: popUpInsideView.leadingAnchor, constant: 5),
+			namesRadioButton.topAnchor.constraint(equalTo: numbersRadioButton.bottomAnchor, constant: 5),
+			namesRadioButton.leadingAnchor.constraint(equalTo: popUpInsideView.leadingAnchor, constant: 5),
 		])
+	}
+	
+	@objc func radioButtonTapped(sender: UIButton) {
+		if sender == numbersRadioButton {
+			namesRadioButton.isSelected = false
+			numbersRadioButton.isSelected = true
+			numbersRadioButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
+			namesRadioButton.setImage(UIImage(systemName: "circle"), for: .normal)
+			filterButton.setImage(UIImage(named: "orderID"), for: .normal)
+			orderId()
+		} else if sender == namesRadioButton {
+			numbersRadioButton.isSelected = false
+			namesRadioButton.isSelected = true
+			numbersRadioButton.setImage(UIImage(systemName: "circle"), for: .normal)
+			namesRadioButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
+			filterButton.setImage(UIImage(named: "orderName"), for: .normal)
+			orderAlphabetic()
+		}
+		popUpBool = false
+		UIView.animate(withDuration: 1) {
+			self.popUpView.frame.origin.y += 800
+		} completion: { _ in
+			self.popUpView.isHidden = true
+		}
 	}
 	
 	@objc func clickedFilter(){
@@ -196,34 +247,43 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		}
 	}
 	
-    private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        searchController.searchBar.tintColor = .white
-        searchController.searchBar.searchTextField.backgroundColor = .white
-        searchController.searchBar.clipsToBounds = true
-        searchController.searchBar.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
-        searchController.searchBar.searchTextField.leftView?.tintColor = .black
-        searchController.searchBar.searchTextField.backgroundColor = .white
-//        searchController.searchBar.showsCancelButton = false
-        if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-//            searchTextField.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                searchTextField.heightAnchor.constraint(equalToConstant: 40),
-                searchTextField.leadingAnchor.constraint(equalTo: searchController.searchBar.leadingAnchor, constant: 16),
-                searchTextField.trailingAnchor.constraint(equalTo: searchController.searchBar.trailingAnchor, constant: -16),
-                searchTextField.centerYAnchor.constraint(equalTo: searchController.searchBar.centerYAnchor, constant: 0),
-            ])
-            searchTextField.clipsToBounds = true
-            searchTextField.layer.cornerRadius = 20.0
-        }
-        if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.font : UIFont(name: "Poppins-Light", size: 13)!])
-        }
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-    }
+	private func setupSearchController() {
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.searchBar.placeholder = "Search"
+		searchController.searchBar.tintColor = .white
+		searchController.searchBar.searchTextField.backgroundColor = .white
+		searchController.searchBar.clipsToBounds = true
+		searchController.searchBar.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
+		searchController.searchBar.searchTextField.leftView?.tintColor = .black
+		searchController.searchBar.searchTextField.backgroundColor = .white
+		//        searchController.searchBar.showsCancelButton = false
+		if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+			//            searchTextField.translatesAutoresizingMaskIntoConstraints = false
+			NSLayoutConstraint.activate([
+				searchTextField.heightAnchor.constraint(equalToConstant: 40),
+				searchTextField.leadingAnchor.constraint(equalTo: searchController.searchBar.leadingAnchor, constant: 16),
+				searchTextField.trailingAnchor.constraint(equalTo: searchController.searchBar.trailingAnchor, constant: -16),
+				searchTextField.centerYAnchor.constraint(equalTo: searchController.searchBar.centerYAnchor, constant: 0),
+			])
+			searchTextField.clipsToBounds = true
+			searchTextField.layer.cornerRadius = 20.0
+		}
+		if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+			textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.font : UIFont(name: "Poppins-Light", size: 13)!])
+		}
+		navigationItem.searchController = searchController
+		definesPresentationContext = true
+	}
+	func orderAlphabetic(){
+		var re = pokes?.results
+		pokes?.results = (re!.sorted(by: { $0.name < $1.name} ))
+		pokeCollectionView.reloadData()
+	}
+	func orderId(){
+		pokes?.results = defaultPokes!.results
+		pokeCollectionView.reloadData()
+	}
 }
 
 extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -235,7 +295,7 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 			fatalError("Hücre oluşturulamadı")
 		}
 		let poke = pokes?.results[indexPath.item]
-        cell.lblPoke.text = poke?.name.capitalized
+		cell.lblPoke.text = poke?.name.capitalized
 		let fileName = pokes?.results[indexPath.item].url
 		let fileArray = fileName?.split(separator: "/")
 		let finalFileName = fileArray?.last
@@ -259,23 +319,14 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 		detailVC.modalPresentationStyle = .fullScreen
 		present(detailVC, animated: true)
 	}
-	func orderAlphabetic(){
-		var re = pokes?.results
-		pokes?.results = (re!.sorted(by: { $0.name < $1.name} ))
-		pokeCollectionView.reloadData()
-	}
-	func orderId(){
-		pokes?.results = defaultPokes!.results
-		pokeCollectionView.reloadData()
-	}
 }
 
 extension HomepageVC: UISearchResultsUpdating{
 	func updateSearchResults(for searchController: UISearchController) {
 		if searchController.searchBar.text != ""{
 			homepageViewModel?.searchAllPokemonsByName(withName: searchController.searchBar.text!.lowercased())
-        }else if searchController.searchBar.text == ""{
-            homepageViewModel?.getAllPokemons()
-        }
+		}else if searchController.searchBar.text == ""{
+			homepageViewModel?.getAllPokemons()
+		}
 	}
 }
