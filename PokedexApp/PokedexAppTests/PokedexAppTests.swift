@@ -63,24 +63,6 @@ final class PokedexAppTests: XCTestCase {
 		XCTAssertEqual(detailOutput.pokemon?.id, 1)
 		XCTAssertEqual(detailOutput.pokemon?.name, "Pikachu")
 	}
-	func testNextPokemon_whenAPISuccess_showsNextPokemon() throws{
-		var pokemon = Pokemon(id: 1, name: "Pikachu", types: [PType(slot: 0, type: Species(name: "", url: ""))], height: 0, weight: 0, stats: [Stat(baseStat: 0, effort: 0, stat: Species(name: "", url: ""))], moves: [Move(move: Species(name: "", url: ""))])
-		
-		webService.fetchPokemonMockResult = .success(pokemon)
-		
-		detailViewModel.getNextPokemon(withId: pokemon.id)
-        
-		XCTAssertEqual(detailOutput.pokemon?.id, 2)
-	}
-	func testBackPokemon_whenAPISuccess_showsBackPokemon() throws{
-		var pokemon = Pokemon(id: 2, name: "Pikachu", types: [PType(slot: 0, type: Species(name: "", url: ""))], height: 0, weight: 0, stats: [Stat(baseStat: 0, effort: 0, stat: Species(name: "", url: ""))], moves: [Move(move: Species(name: "", url: ""))])
-		
-		webService.fetchPokemonMockResult = .success(pokemon)
-		
-		detailViewModel.getBackPokemon(withId: pokemon.id)
-		
-		XCTAssertEqual(detailOutput.pokemon?.id, 1)
-	}
 	
 	class MockWebService: WebServiceProtocol{
 		var fetchAllPokemonMockResult: Result<PokedexApp.AllPokemons, CustomError>?

@@ -246,8 +246,8 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 					self.pokemonImageAnimate()
 					
 					self.typesCount = pokemon.types.count
-					self.heightTitleLabel.text = "\(pokemon.height) m"
-					self.weightTitleLabel.text = "\(pokemon.weight) kg"
+                    self.heightTitleLabel.text = "\(Float(pokemon.height) / 10.0) m"
+                    self.weightTitleLabel.text = "\(Float(pokemon.weight) / 10.0) kg"
 					self.movesTitleLabel.text = "\(pokemon.moves[0].move.name.capitalized)\n\(pokemon.moves[1].move.name.capitalized)"
 					self.pokemonNameLabel.text = pokemon.name.capitalized
 					self.pokemonIdLabel.text = "#\(String(format:"%03d", pokemon.id))"

@@ -154,7 +154,7 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 			fatalError("Hücre oluşturulamadı")
 		}
 		let poke = pokes?.results[indexPath.item]
-		cell.lblPoke.text = poke?.name
+        cell.lblPoke.text = poke?.name.capitalized
 		let fileName = pokes?.results[indexPath.item].url
 		let fileArray = fileName?.split(separator: "/")
 		let finalFileName = fileArray?.last
