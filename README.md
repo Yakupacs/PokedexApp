@@ -3,7 +3,7 @@
 </h1>
 
 ## Description
-<p>You can list Pokémon and view them in detail using the Pokémon application.</p>
+<p>This application is the final project of the Pazarama iOS Bootcamp, developed as a team effort, and it involves listing and detailing Pokémon using data obtained from Pokeapi.com.</p>
 
 ## Technologies and Libraries
 - Protocol Oriented Programming
