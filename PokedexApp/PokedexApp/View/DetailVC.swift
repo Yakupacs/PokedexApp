@@ -10,7 +10,6 @@ import Kingfisher
 
 class DetailVC: UIViewController, DetailPokemonOutput {
 	
-	var pokemonColor: UIColor? = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 	var pokemon: Pokemon?
 	var detailViewModel: DetailViewModel?
 	var selectedPokemon: SelectedPokemon?
@@ -125,12 +124,12 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 	
 	private let baseTitleLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 18, textAlignment: .center, textColor: .black, line: 0)
 	
-	private let hpLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
-	private let atkLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
-	private let defLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
-	private let satkLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
-	private let sdefLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
-	private let spdLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let hpLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let atkLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let defLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let satkLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let sdefLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let spdLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 13, textAlignment: .right, textColor: .black, line: 1)
 	
 	private let baseValueStatsStackView: UIStackView = {
 		let stackView = UIStackView()
@@ -140,12 +139,12 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return stackView
 	}()
 	
-	private let hpValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
-	private let atkValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
-	private let defValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
-	private let satkValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
-	private let sdefValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
-	private let spdValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .right, textColor: .black, line: 1)
+	private let hpValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let atkValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let defValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let satkValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let sdefValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .left, textColor: .black, line: 1)
+	private let spdValueLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Light", size: 13, textAlignment: .left, textColor: .black, line: 1)
 	
 	private let progressStackView: UIStackView = {
 		let stackView = UIStackView()
@@ -158,42 +157,36 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 	let hpProgressBar: UIProgressView = {
 		let progressBar = UIProgressView()
 		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		progressBar.progressTintColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 		return progressBar
 	}()
 	
 	let atkProgressBar: UIProgressView = {
 		let progressBar = UIProgressView()
 		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		progressBar.progressTintColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 		return progressBar
 	}()
 	
 	let defProgressBar: UIProgressView = {
 		let progressBar = UIProgressView()
 		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		progressBar.progressTintColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 		return progressBar
 	}()
 	
 	let satkProgressBar: UIProgressView = {
 		let progressBar = UIProgressView()
 		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		progressBar.progressTintColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 		return progressBar
 	}()
 	
 	let sdefProgressBar: UIProgressView = {
 		let progressBar = UIProgressView()
 		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		progressBar.progressTintColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 		return progressBar
 	}()
 	
 	let spdProgressBar: UIProgressView = {
 		let progressBar = UIProgressView()
 		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		progressBar.progressTintColor = UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
 		return progressBar
 	}()
 	
@@ -567,34 +560,35 @@ extension DetailVC{
 		self.spdValueLabel.text = String(pokemon.stats[5].baseStat)
 	}
 	
-	func setColor(pokemonType: String) -> UIColor{
-		if pokemonType == "Grass"{
-			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		}else if pokemonType == "Poison"{
-			return UIColor(red: 164 / 255.0, green: 62 / 255.0, blue: 158 / 255.0, alpha: 1)
-		}else if pokemonType == "Fire"{
-			return UIColor(red: 245 / 255.0, green: 125 / 255.0, blue: 49 / 255.0, alpha: 1)
-		}else if pokemonType == "Water"{
-			return UIColor(red: 100 / 255.0, green: 147 / 255.0, blue: 235 / 255.0, alpha: 1)
-		}else if pokemonType == "Bug"{
-			return UIColor(red: 167 / 255.0, green: 183 / 255.0, blue: 35 / 255.0, alpha: 1)
-		}else if pokemonType == "Flying"{
-			return UIColor(red: 168 / 255.0, green: 145 / 255.0, blue: 236 / 255.0, alpha: 1)
-		}else if pokemonType == "Electric"{
-			return UIColor(red: 249 / 255.0, green: 207 / 255.0, blue: 48 / 255.0, alpha: 1)
-		}else if pokemonType == "Ghost"{
-			return UIColor(red: 112 / 255.0, green: 85 / 255.0, blue: 155 / 255.0, alpha: 1)
-		}else if pokemonType == "Normal"{
-			return UIColor(red: 170 / 255.0, green: 166 / 255.0, blue: 127 / 255.0, alpha: 1)
-		}else if pokemonType == "Psychic"{
-			return UIColor(red: 251 / 255.0, green: 85 / 255.0, blue: 132 / 255.0, alpha: 1)
-		}else if pokemonType == "Steel"{
-			return UIColor(red: 183 / 255.0, green: 185 / 255.0, blue: 208 / 255.0, alpha: 1)
-		}else if pokemonType == "Rock"{
-			return UIColor(red: 182 / 255.0, green: 158 / 255.0, blue: 49 / 255.0, alpha: 1)
-		}else{
-			return UIColor(red: 116 / 255.0, green: 203 / 255.0, blue: 72 / 255.0, alpha: 1)
-		}
+    func setColor(pokemonType: String) -> UIColor{
+        if pokemonType == "Grass"{
+            return .grass
+        }else if pokemonType == "Poison"{
+            return .poison
+        }else if pokemonType == "Fire"{
+            return .fire
+        }else if pokemonType == "Water"{
+            return .water
+        }else if pokemonType == "Bug"{
+            return .bug
+        }else if pokemonType == "Flying"{
+            return .flying
+        }else if pokemonType == "Electric"{
+            return .electric
+        }else if pokemonType == "Ghost"{
+            return .ghost
+        }else if pokemonType == "Normal"{
+            return .normal
+        }else if pokemonType == "Psychic"{
+            return .psychic
+        }else if pokemonType == "Steel"{
+            return .steel
+        }else if pokemonType == "Rock"{
+            return .rock
+        }else{
+            return .normal
+        }
+
 	}
 	
 	func pokemonImageAnimate(){
