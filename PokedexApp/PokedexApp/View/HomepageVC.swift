@@ -59,7 +59,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	let popUpView: UIView = {
 		let view = UIView()
 		view.translatesAutoresizingMaskIntoConstraints = false
-		view.backgroundColor = .red
+        view.backgroundColor = UIColor.identityRed
 		view.layer.cornerRadius = 12
 		return view
 	}()
@@ -150,7 +150,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	}
 	
 	private func setupViews(){
-		view.backgroundColor = UIColor(red: 220/255, green: 10/255, blue: 45/255, alpha: 1)
+        view.backgroundColor = UIColor.identityRed
 		
 		stackView.addArrangedSubview(imgPokeball)
 		stackView.addArrangedSubview(imgPokedex)
