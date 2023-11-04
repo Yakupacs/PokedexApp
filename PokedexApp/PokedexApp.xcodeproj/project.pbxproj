@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2535132AF653D600027870 /* String+PokedexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2535122AF653D600027870 /* String+PokedexApp.swift */; };
 		DA32A3232AF4DABE002AEF08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3222AF4DABE002AEF08 /* AppDelegate.swift */; };
 		DA32A3252AF4DABE002AEF08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3242AF4DABE002AEF08 /* SceneDelegate.swift */; };
 		DA32A3272AF4DABE002AEF08 /* HomepageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3262AF4DABE002AEF08 /* HomepageVC.swift */; };
@@ -49,7 +50,7 @@
 		DA32A39C2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A38A2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf */; };
 		DA32A39D2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA32A38B2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf */; };
 		DA32A3A12AF59377002AEF08 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3A02AF59377002AEF08 /* CustomView.swift */; };
-		DA32A3A42AF5A0A0002AEF08 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3A32AF5A0A0002AEF08 /* Alert.swift */; };
+		DA32A3A42AF5A0A0002AEF08 /* View+PokedexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32A3A32AF5A0A0002AEF08 /* View+PokedexApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA2535122AF653D600027870 /* String+PokedexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PokedexApp.swift"; sourceTree = "<group>"; };
 		DA32A31F2AF4DABE002AEF08 /* PokedexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokedexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA32A3222AF4DABE002AEF08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA32A3242AF4DABE002AEF08 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,7 +117,7 @@
 		DA32A38A2AF52BFD002AEF08 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
 		DA32A38B2AF52BFD002AEF08 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
 		DA32A3A02AF59377002AEF08 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
-		DA32A3A32AF5A0A0002AEF08 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		DA32A3A32AF5A0A0002AEF08 /* View+PokedexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PokedexApp.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,7 +305,8 @@
 		DA32A3A22AF5A07F002AEF08 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				DA32A3A32AF5A0A0002AEF08 /* Alert.swift */,
+				DA32A3A32AF5A0A0002AEF08 /* View+PokedexApp.swift */,
+				DA2535122AF653D600027870 /* String+PokedexApp.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -467,10 +470,11 @@
 				DA32A3272AF4DABE002AEF08 /* HomepageVC.swift in Sources */,
 				DA32A3A12AF59377002AEF08 /* CustomView.swift in Sources */,
 				DA32A3572AF4DC14002AEF08 /* DetailVC.swift in Sources */,
-				DA32A3A42AF5A0A0002AEF08 /* Alert.swift in Sources */,
+				DA32A3A42AF5A0A0002AEF08 /* View+PokedexApp.swift in Sources */,
 				DA32A35E2AF4DC73002AEF08 /* HomepageViewModel.swift in Sources */,
 				DA32A3662AF4E4E1002AEF08 /* DetailPokemonOutput.swift in Sources */,
 				DA32A36F2AF4FC85002AEF08 /* AllPokemons.swift in Sources */,
+				DA2535132AF653D600027870 /* String+PokedexApp.swift in Sources */,
 				DA32A3712AF505C3002AEF08 /* PokedexCVC.swift in Sources */,
 				DA32A3622AF4DCEB002AEF08 /* Pokemon.swift in Sources */,
 				DA32A3232AF4DABE002AEF08 /* AppDelegate.swift in Sources */,

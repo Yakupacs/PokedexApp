@@ -41,12 +41,13 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return infoView
 	}()
 	
-	let backButton: UIButton = {
-		let backButton = UIButton()
-		backButton.translatesAutoresizingMaskIntoConstraints = false
-		backButton.setImage(UIImage(named: "arrow_back"), for: .normal)
-		backButton.tintColor = .white
-		return backButton
+	lazy var backButton: UIButton = {
+		let button = UIButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(named: "arrow_back"), for: .normal)
+		button.tintColor = .white
+		button.addTarget(self, action: #selector(backFunc), for: .touchUpInside)
+		return button
 	}()
 	
 	private let pokemonNameLabel = CustomLabel(frame: .zero, text: "", fontName: "Poppins-Bold", size: 24, textAlignment: .left, textColor: .white, line: 0)
@@ -58,20 +59,22 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return pokeballImageView
 	}()
 	
-	let backPokemonButton: UIButton = {
-		let backButton = UIButton()
-		backButton.translatesAutoresizingMaskIntoConstraints = false
-		backButton.setImage(UIImage(named: "left"), for: .normal)
-		backButton.tintColor = .white
-		return backButton
+	lazy var backPokemonButton: UIButton = {
+		let button = UIButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(named: "left"), for: .normal)
+		button.tintColor = .white
+		button.addTarget(self, action: #selector(backPokemonFunc), for: .touchUpInside)
+		return button
 	}()
 	
-	let nextPokemonButton: UIButton = {
-		let backButton = UIButton()
-		backButton.translatesAutoresizingMaskIntoConstraints = false
-		backButton.setImage(UIImage(named: "right"), for: .normal)
-		backButton.tintColor = .white
-		return backButton
+	lazy var nextPokemonButton: UIButton = {
+		let button = UIButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(named: "right"), for: .normal)
+		button.tintColor = .white
+		button.addTarget(self, action: #selector(nextPokemonFunc), for: .touchUpInside)
+		return button
 	}()
 	
 	private let aboutTitleLabel = CustomLabel(frame: .zero, text: "About", fontName: "Poppins-Bold", size: 16, textAlignment: .center, textColor: .black, line: 1)
@@ -154,41 +157,12 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 		return stackView
 	}()
 	
-	let hpProgressBar: UIProgressView = {
-		let progressBar = UIProgressView()
-		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		return progressBar
-	}()
-	
-	let atkProgressBar: UIProgressView = {
-		let progressBar = UIProgressView()
-		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		return progressBar
-	}()
-	
-	let defProgressBar: UIProgressView = {
-		let progressBar = UIProgressView()
-		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		return progressBar
-	}()
-	
-	let satkProgressBar: UIProgressView = {
-		let progressBar = UIProgressView()
-		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		return progressBar
-	}()
-	
-	let sdefProgressBar: UIProgressView = {
-		let progressBar = UIProgressView()
-		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		return progressBar
-	}()
-	
-	let spdProgressBar: UIProgressView = {
-		let progressBar = UIProgressView()
-		progressBar.translatesAutoresizingMaskIntoConstraints = false
-		return progressBar
-	}()
+	let hpProgressBar = CustomProgressView(frame: .zero)
+	let atkProgressBar = CustomProgressView(frame: .zero)
+	let defProgressBar = CustomProgressView(frame: .zero)
+	let satkProgressBar = CustomProgressView(frame: .zero)
+	let sdefProgressBar = CustomProgressView(frame: .zero)
+	let spdProgressBar = CustomProgressView(frame: .zero)
 	
 	let baseDividerView: UIView = {
 		let view = UIView()
@@ -199,15 +173,9 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        let fileName = SelectedPokemon.shared.selected?.url
-        let fileArray = fileName?.split(separator: "/")
-        let finalFileName = fileArray?.last
-        detailViewModel?.getPokemon(withId: Int(finalFileName!)!)
-        detailViewModel?.getPokemonDescription(withId: Int(finalFileName!)!)
+		detailViewModel?.getPokemon(withId: (SelectedPokemon.shared.selected?.url.getLastPath())!)
+        detailViewModel?.getPokemonDescription(withId: (SelectedPokemon.shared.selected?.url.getLastPath())!)
 		setupConstraints()
-		backButton.addTarget(self, action: #selector(backFunc), for: .touchUpInside)
-		backPokemonButton.addTarget(self, action: #selector(backPokemonFunc), for: .touchUpInside)
-		nextPokemonButton.addTarget(self, action: #selector(nextPokemonFunc), for: .touchUpInside)
 	}
 	
 	init(detailViewModel: DetailViewModel? = nil) {
@@ -236,30 +204,15 @@ class DetailVC: UIViewController, DetailPokemonOutput {
 					}else{
 						self.backPokemonButton.isHidden = false
 					}
-					let finalFileName = pokemon.id
-					if let url = URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/\(String(format:"%03d", finalFileName)).png") {
-						self.pokeImageView.kf.setImage(with: url)
-					}
 					self.nextPokemonButton.isEnabled = false
 					self.backPokemonButton.isEnabled = false
-					
-					self.pokemonImageAnimate()
-					
-					self.typesCount = pokemon.types.count
-                    self.heightTitleLabel.text = "\(Float(pokemon.height) / 10.0) m"
-                    self.weightTitleLabel.text = "\(Float(pokemon.weight) / 10.0) kg"
-					self.movesTitleLabel.text = "\(pokemon.moves[0].move.name.capitalized)\n\(pokemon.moves[1].move.name.capitalized)"
-					self.pokemonNameLabel.text = pokemon.name.capitalized
-					self.pokemonIdLabel.text = "#\(String(format:"%03d", pokemon.id))"
-					self.buttonsRename()
-					self.buttons = []
+					self.setPokemonValue(pokemon: pokemon)
 					self.view.backgroundColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
 					self.aboutTitleLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
 					self.baseTitleLabel.textColor = self.setColor(pokemonType: pokemon.types.first!.type.name.capitalized)
 					self.setProgressBarLabel(pokemonType: pokemon.types.first!.type.name.capitalized)
 					self.setProgressBarColor(pokemon: pokemon)
 					self.setProgressBarAnimate(pokemon: pokemon)
-					
 				}
 			}
 		}
@@ -606,5 +559,20 @@ extension DetailVC{
 				}
 			}
 		}
+	}
+	func setPokemonValue(pokemon: Pokemon){
+		let finalFileName = pokemon.id
+		if let url = URL(string: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/\(String(format:"%03d", finalFileName)).png") {
+			self.pokeImageView.kf.setImage(with: url)
+		}
+		self.pokemonImageAnimate()
+		self.typesCount = pokemon.types.count
+		self.heightTitleLabel.text = "\(Float(pokemon.height) / 10.0) m"
+		self.weightTitleLabel.text = "\(Float(pokemon.weight) / 10.0) kg"
+		self.movesTitleLabel.text = "\(pokemon.moves[0].move.name.capitalized)\n\(pokemon.moves[1].move.name.capitalized)"
+		self.pokemonNameLabel.text = pokemon.name.capitalized
+		self.pokemonIdLabel.text = "#\(String(format:"%03d", pokemon.id))"
+		self.buttonsRename()
+		self.buttons = []
 	}
 }

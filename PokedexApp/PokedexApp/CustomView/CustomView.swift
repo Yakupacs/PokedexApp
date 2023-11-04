@@ -26,3 +26,16 @@ class CustomLabel: UILabel{
 		fatalError("init(coder:) has not been implemented")
 	}
 }
+
+class CustomProgressView: UIProgressView{
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		translatesAutoresizingMaskIntoConstraints = false
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
+
+
