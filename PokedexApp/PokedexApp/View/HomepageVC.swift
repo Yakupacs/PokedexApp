@@ -61,6 +61,11 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.identityRed
 		view.layer.cornerRadius = 12
+        
+        view.layer.shadowColor = UIColor.gray.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 10
 		return view
 	}()
 	let popUpInsideView: UIView = {
@@ -86,6 +91,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		radioButton.setTitleColor(.black, for: .normal)
 		radioButton.titleLabel?.font = UIFont(name: "Poppins", size: 10)
 		radioButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
+        radioButton.tintColor = .identityRed
 		return radioButton
 	}()
 	let namesRadioButton: UIButton = {
@@ -95,6 +101,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		radioButton.setTitle(" Name", for: .normal)
 		radioButton.titleLabel?.font = UIFont(name: "Poppins", size: 10)
 		radioButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        radioButton.tintColor = .identityRed
 		return radioButton
 	}()
 	
