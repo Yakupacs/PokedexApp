@@ -258,7 +258,6 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 		searchController.searchBar.searchTextField.leftView?.tintColor = .black
 		searchController.searchBar.searchTextField.backgroundColor = .white
 		if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-			//            searchTextField.translatesAutoresizingMaskIntoConstraints = false
 			NSLayoutConstraint.activate([
 				searchTextField.heightAnchor.constraint(equalToConstant: 40),
 				searchTextField.leadingAnchor.constraint(equalTo: searchController.searchBar.leadingAnchor, constant: 16),
