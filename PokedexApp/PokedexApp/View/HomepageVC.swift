@@ -13,6 +13,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 	var homepageViewModel: HomepageViewModel?
 	
 	var pokes: AllPokemons?
+	var defaultPokes: AllPokemons?
 	var popUpBool = false
 	
 	private let searchController = UISearchController(searchResultsController: nil)
@@ -111,6 +112,7 @@ class HomepageVC: UIViewController, HomepagePokemonOutput {
 			present(alert, animated: true)
 		}else{
 			self.pokes = pokemons
+			self.defaultPokes = pokemons
 			DispatchQueue.main.async{
 				self.pokeCollectionView.reloadData()
 			}
@@ -244,10 +246,10 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 		return cell
 	}
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-		return 16 //vertically
+		return 16
 	}
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return 0 //horizontally
+		return 0
 	}
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		SelectedPokemon.shared.selected = pokes?.results[indexPath.row]
@@ -256,6 +258,15 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 		let detailVC = DetailVC(detailViewModel: detailViewModel)
 		detailVC.modalPresentationStyle = .fullScreen
 		present(detailVC, animated: true)
+	}
+	func orderAlphabetic(){
+		var re = pokes?.results
+		pokes?.results = (re!.sorted(by: { $0.name < $1.name} ))
+		pokeCollectionView.reloadData()
+	}
+	func orderId(){
+		pokes?.results = defaultPokes!.results
+		pokeCollectionView.reloadData()
 	}
 }
 
