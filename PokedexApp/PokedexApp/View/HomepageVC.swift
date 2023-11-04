@@ -171,10 +171,9 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 		return 0 //horizontally
 	}
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		var selectedPokemon = pokes?.results[indexPath.row]
 		SelectedPokemon.shared.selected = pokes?.results[indexPath.row]
-		var webServiceProtocol: WebServiceProtocol = WebService()
-		var detailViewModel = DetailViewModel(webService: webServiceProtocol)
+		let webServiceProtocol: WebServiceProtocol = WebService()
+		let detailViewModel = DetailViewModel(webService: webServiceProtocol)
 		let detailVC = DetailVC(detailViewModel: detailViewModel)
 		detailVC.modalPresentationStyle = .fullScreen
 		present(detailVC, animated: true)
@@ -185,6 +184,8 @@ extension HomepageVC: UISearchResultsUpdating{
 	func updateSearchResults(for searchController: UISearchController) {
 		if searchController.searchBar.text != ""{
 			homepageViewModel?.searchAllPokemonsByName(withName: searchController.searchBar.text!.lowercased())
-		}
+        }else if searchController.searchBar.text == ""{
+            homepageViewModel?.getAllPokemons()
+        }
 	}
 }

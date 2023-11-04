@@ -21,8 +21,11 @@ final class PokedexAppTests: XCTestCase {
 	override func setUpWithError() throws {
 		webService = MockWebService()
 		homepageViewModel = HomepageViewModel(webService: webService)
+        detailViewModel = DetailViewModel(webService: webService)
+        
         homepageOutput = MockHomepageViewModelOutput()
         homepageViewModel.homepageOutput = homepageOutput
+        
         detailOutput = MockDetailViewModelOutput()
         detailViewModel.detailOutput = detailOutput
 	}
@@ -66,7 +69,7 @@ final class PokedexAppTests: XCTestCase {
 		webService.fetchPokemonMockResult = .success(pokemon)
 		
 		detailViewModel.getNextPokemon(withId: pokemon.id)
-		
+        
 		XCTAssertEqual(detailOutput.pokemon?.id, 2)
 	}
 	func testBackPokemon_whenAPISuccess_showsBackPokemon() throws{
