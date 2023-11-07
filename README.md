@@ -8,7 +8,7 @@
 ## Technologies and Libraries
 - Protocol Oriented Programming
 - URLSession
-- Programmatic UI
+- Programmatically UI
 - MVVM
 - Delegate Pattern
 - Singleton Pattern
